@@ -45,6 +45,11 @@ function Minion(spriteTexture, atX, atY, createCircle, size) {
 }
 gEngine.Core.inheritPrototype(Minion, WASDObj);
 
+Minion.prototype.draw = function (aCamera) 
+{
+    GameObject.prototype.draw.call(this, aCamera);
+};
+
 Minion.prototype.update = function (aCamera) {
     GameObject.prototype.update.call(this);
 };
