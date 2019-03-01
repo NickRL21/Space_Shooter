@@ -40,6 +40,7 @@ function Minion(spriteTexture, atX, atY, createCircle, size) {
     var speed = 20 + Math.random() * 10;
     r.setVelocity(vx * speed, vy * speed);
     this.setRigidBody(r);
+    //this is spawing as invisible?????
     this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
 }

@@ -13,7 +13,7 @@
 
 function MyGame() 
 {
-    this.kMinionSprite = "assets/Fire/bush.png";
+    this.kMinionSprite = "assets/Fire/target.png";
     this.mShip = null;
     
     
@@ -42,10 +42,15 @@ MyGame.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
-    this.mShip = new Minion(this.kMinionSprite, 50, 40, false, [50,50]);
+    this.mShip = new Minion(this.kMinionSprite, 50, 40, false, 50);
+    this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
+    this.mObject = new TextureRenderable(this.kMinionSprite);
+    this.mObject.getXform().setSize(10,10);
+    this.mObject.getXform().setPosition(50,40);
     
             // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    
     
 };
 
@@ -58,7 +63,8 @@ MyGame.prototype.draw = function ()
     
     
     this.mCamera.setupViewProjection();
-    this.mShip.draw(this.mCamera);
+    this.mShip.draw(this.mCamera);     
+    this.mObject.draw(this.mCamera);
 
 };
 
