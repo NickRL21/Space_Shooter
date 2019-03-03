@@ -44,14 +44,16 @@ MyGame.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
+    // create the player ship
     this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, false, 2);
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
     
+    // create the tiled background
     this.mBackground = new TiledGameObject(new TextureRenderable(this.kBackground));
     this.mBackground.getXform().setSize(50,50);
     this.mBackground.getXform().setPosition(50,40);
     
-            // sets the background to gray
+    // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 };
 
@@ -62,8 +64,9 @@ MyGame.prototype.draw = function ()
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
     
-    
     this.mCamera.setupViewProjection();
+    
+    // draw the game objects
     this.mBackground.draw(this.mCamera);
     this.mShip.draw(this.mCamera);   
 
@@ -72,9 +75,7 @@ MyGame.prototype.draw = function ()
 
 MyGame.prototype.update = function () 
 {
-    var shipPos = this.mShip.getXform().getPosition();
-    
+    // update game objects
     this.mShip.update(this.mCamera);
-    this.mCamera.setWCCenter(shipPos[0], shipPos[1]);
     this.mCamera.update();
 };

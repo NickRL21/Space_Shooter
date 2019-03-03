@@ -20,9 +20,14 @@ function PlayerShip(spriteTexture, atX, atY, createCircle, size) {
     var w = kShipWidth + size;
     var h = kShipHeight + size;
     
+    // create sprite renderable
     this.mPlayerShip = new SpriteRenderable(spriteTexture);
+    
+    // set position to the red ship
     this.mPlayerShip.setElementPixelPositions(0,111,8,80);
     this.mPlayerShip.setColor([1, 1, 1, 0]);
+    
+    // set the position and size
     this.mPlayerShip.getXform().setPosition(atX, atY);
     this.mPlayerShip.getXform().setSize(w, h);
     if(createCircle===1){
@@ -60,18 +65,18 @@ PlayerShip.prototype.update = function (aCamera)
     GameObject.prototype.update.call(this);
     this.keyControl();
     
+    // get ship coordinates
+    var shipPos = this.mPlayerShip.getXform().getPosition();
+    var playerX = shipPos[0];
+    var playerY = shipPos[1];
+    
+    aCamera.setWCCenter(playerX, playerY);
+    
     if(aCamera.isMouseInViewport())
     {
         var mouseX = aCamera.mouseWCX();
         var mouseY = aCamera.mouseWCY();
-        var playerX = this.mPlayerShip.getXform().getXPos();
-        var playerY = this.mPlayerShip.getXform().getYPos();
         var angleDegrees = Math.atan2(playerY - mouseY, playerX - mouseX) * 180 / Math.PI;
-        console.log(mouseX)
-        console.log(mouseY)
-        console.log(playerX)
-        console.log(playerY)
-        console.log(angleDegrees);
         this.mPlayerShip.getXform().setRotationInDegree(angleDegrees + 90);
     }
     
