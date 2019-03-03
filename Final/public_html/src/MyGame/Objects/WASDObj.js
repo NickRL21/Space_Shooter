@@ -13,7 +13,8 @@ function WASDObj() {
 }
 gEngine.Core.inheritPrototype(WASDObj, GameObject);
 
-WASDObj.prototype.keyControl = function () {
+WASDObj.prototype.keyControl = function () 
+{
     var xform = this.getXform();
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.W)) {
         xform.incYPosBy(kWASDDelta);

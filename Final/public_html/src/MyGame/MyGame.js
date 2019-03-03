@@ -13,9 +13,9 @@
 
 function MyGame() 
 {
-    this.kMinionSprite = "assets/Fire/target.png";
+    this.kSpriteSheet = "assets/Hero/sheet.png";
+    this.kBackground = "assets/Backgrounds/blue.png";
     this.mShip = null;
-    
     
     // The camera to view the scene
     this.mCamera = null;
@@ -25,12 +25,14 @@ gEngine.Core.inheritPrototype(MyGame, Scene);
 
 MyGame.prototype.loadScene = function () 
 {
-    gEngine.Textures.loadTexture(this.kMinionSprite);
+    gEngine.Textures.loadTexture(this.kSpriteSheet);
+    gEngine.Textures.loadTexture(this.kBackground);
 };
 
 MyGame.prototype.unloadScene = function () 
 {
-    gEngine.Textures.unloadTexture(this.kMinionSprite);
+    gEngine.Textures.unloadTexture(this.kSpriteSheet);
+    gEngine.Textures.unloadTexture(this.kBackground);
 };
 
 MyGame.prototype.initialize = function () {
@@ -42,16 +44,15 @@ MyGame.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
-    this.mShip = new Minion(this.kMinionSprite, 50, 40, false, 50);
+    this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, false, 2);
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
-    this.mObject = new TextureRenderable(this.kMinionSprite);
-    this.mObject.getXform().setSize(10,10);
-    this.mObject.getXform().setPosition(50,40);
+    
+    this.mBackground = new TiledGameObject(new TextureRenderable(this.kBackground));
+    this.mBackground.getXform().setSize(50,50);
+    this.mBackground.getXform().setPosition(50,40);
     
             // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
-    
-    
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -63,12 +64,17 @@ MyGame.prototype.draw = function ()
     
     
     this.mCamera.setupViewProjection();
-    this.mShip.draw(this.mCamera);     
-    this.mObject.draw(this.mCamera);
+    this.mBackground.draw(this.mCamera);
+    this.mShip.draw(this.mCamera);   
 
+    
 };
 
 MyGame.prototype.update = function () 
 {
-    this.mShip.update();
+    var shipPos = this.mShip.getXform().getPosition();
+    
+    this.mShip.update(this.mCamera);
+    this.mCamera.setWCCenter(shipPos[0], shipPos[1]);
+    this.mCamera.update();
 };

@@ -136,7 +136,7 @@ RigidRectangle.prototype.draw = function (aCamera) {
     this.mLine.setColor([0, 0, 0, 1]);
     var i = 0;
     for (i=0; i<4; i++) {
-        this.drawAnEdge(i, (i+1)%4, aCamera);
+        //this.drawAnEdge(i, (i+1)%4, aCamera);
     }
     
     if (this.mDrawBounds) {
