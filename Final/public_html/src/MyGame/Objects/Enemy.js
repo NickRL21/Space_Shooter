@@ -7,6 +7,7 @@
 function Enemy(spriteRenderable) 
 {
     GameObject.call(this, spriteRenderable);
+    this.mHealth = 50.0;
 };
 gEngine.Core.inheritPrototype(Enemy, GameObject);
 
@@ -14,6 +15,12 @@ Enemy.prototype.setSpeed = function (s) { this.mSpeed = s; };
 Enemy.prototype.getSpeed = function () { return this.mSpeed; };
 Enemy.prototype.incSpeedBy = function (delta) { this.mSpeed += delta; };
 
+Enemy.prototype.setHealth = function (h) { this.mHealth = h; };
+Enemy.prototype.getHealth = function () { return this.mHealth; };
+Enemy.prototype.isAlive = function () { return this.mHealth > 0.0; };
+Enemy.prototype.hit = function(damage){
+    this.mHealth -= damage;
+};
 
 // Orientate the entire object to point towards point p
 // will rotate Xform() accordingly

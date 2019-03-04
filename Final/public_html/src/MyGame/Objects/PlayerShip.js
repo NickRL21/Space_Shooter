@@ -72,7 +72,7 @@ PlayerShip.prototype.update = function (aCamera, enemies)
     
     for(var i = 0; i < this.mLasers.length; i++)
     {
-        this.mLasers[i].update();
+        this.mLasers[i].update(enemies);
     }
     
     this.keyControl();

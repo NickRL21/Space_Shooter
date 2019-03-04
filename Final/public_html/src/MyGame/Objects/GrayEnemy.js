@@ -15,7 +15,7 @@ function GrayEnemy(spriteSource)
     this.mSprite.getXform().setPosition(50, 40);
     this.mSprite.getXform().setSize(5, 5);
 
-  
+    
     Enemy.call(this, this.mSprite);
     Enemy.prototype.setSpeed.call(this, 0.1);
 };
@@ -27,6 +27,11 @@ GrayEnemy.prototype.draw = function (aCamera)
     //GameObject.prototype.draw.call(this, aCamera);
 };
 
+GrayEnemy.prototype.hit = function(damage){
+    Enemy.prototype.hit.call(this, damage);
+    // do somehting cool
+    console.log('hit');
+};
 
 GrayEnemy.prototype.update = function(playerPos) 
 {

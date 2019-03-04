@@ -91,9 +91,17 @@ MyGame.prototype.draw = function ()
 MyGame.prototype.update = function () 
 {
     // update game objects
-    this.mShip.update(this.mCamera);
+    this.mShip.update(this.mCamera, this.mEnemies);
     for(var i = 0; i < this.mEnemies.length; ++i) {
         this.mEnemies[i].update(this.mShip.getXform().getPosition());
+    }
+   
+    for( var j = 0; j < this.mEnemies.length; ++j){
+        console.log(this.mEnemies[j])
+        var alive = this.mEnemies[j].isAlive();
+        if(!alive){
+            this.mEnemies.splice(j,1);
+        }
     }
     this.mCamera.update();
 };
