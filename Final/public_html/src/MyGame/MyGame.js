@@ -88,6 +88,19 @@ MyGame.prototype.draw = function ()
     
 };
 
+MyGame.prototype.removeDeadEnemies = function (){
+    var to_remove = [];
+    for( var j = 0; j < this.mEnemies.length; ++j){
+        var alive = this.mEnemies[j].isAlive();
+        if(!alive){
+            to_remove.push(j);
+        }
+    }
+    for(var i = 0; i < to_remove.length; ++i){
+        this.mEnemies.splice(to_remove[i], 1);
+    }
+};
+
 MyGame.prototype.update = function () 
 {
     // update game objects
@@ -95,13 +108,9 @@ MyGame.prototype.update = function ()
     for(var i = 0; i < this.mEnemies.length; ++i) {
         this.mEnemies[i].update(this.mShip.getXform().getPosition());
     }
-   
-    for( var j = 0; j < this.mEnemies.length; ++j){
-        console.log(this.mEnemies[j])
-        var alive = this.mEnemies[j].isAlive();
-        if(!alive){
-            this.mEnemies.splice(j,1);
-        }
-    }
+    
+    this.removeDeadEnemies();
+    
+    
     this.mCamera.update();
 };
