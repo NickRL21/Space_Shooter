@@ -30,6 +30,9 @@ function PlayerShip(spriteTexture, atX, atY, createCircle, size) {
     // set the position and size
     this.mPlayerShip.getXform().setPosition(atX, atY);
     this.mPlayerShip.getXform().setSize(w, h);
+    
+    
+    
     if(createCircle===1){
        this.mPlayerShip.getXform().setSize(h, h); 
     }

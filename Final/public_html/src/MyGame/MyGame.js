@@ -16,6 +16,7 @@ function MyGame()
     this.kSpriteSheet = "assets/Hero/sheet.png";
     this.kBackground = "assets/Backgrounds/blue.png";
     this.mShip = null;
+    this.mEnemies = [];
     
     // The camera to view the scene
     this.mCamera = null;
@@ -53,9 +54,19 @@ MyGame.prototype.initialize = function () {
     this.mBackground.getXform().setSize(50,50);
     this.mBackground.getXform().setPosition(50,40);
     
+    this.spawnEnemy();
+    
     // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 };
+
+MyGame.prototype.spawnEnemy = function() {
+    var enemy = new GrayEnemy(this.kSpriteSheet);
+    enemy.toggleDrawRenderable();
+    enemy.setVisibility(true);
+    console.log(JSON.stringify(enemy));
+    this.mEnemies.push(enemy);
+}
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
@@ -69,6 +80,10 @@ MyGame.prototype.draw = function ()
     // draw the game objects
     this.mBackground.draw(this.mCamera);
     this.mShip.draw(this.mCamera);   
+    
+    for(var i = 0; i < this.mEnemies.length; ++i) {
+        this.mEnemies[i].draw(this.mCamera);
+    }
 
     
 };
@@ -77,5 +92,8 @@ MyGame.prototype.update = function ()
 {
     // update game objects
     this.mShip.update(this.mCamera);
+    for(var i = 0; i < this.mEnemies.length; ++i) {
+        this.mEnemies[i].update(this.mShip.getXform().getPosition());
+    }
     this.mCamera.update();
 };
