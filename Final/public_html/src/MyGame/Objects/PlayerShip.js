@@ -15,13 +15,14 @@ var kShipWidth = 6*0.5;
 var kShipHeight = 4.8*0.5;
 var kShipRandomSize = 5;
 
-function PlayerShip(spriteTexture, atX, atY, createCircle, size) {
-        
+function PlayerShip(spriteTexture, atX, atY, size) 
+{
     var w = kShipWidth + size;
     var h = kShipHeight + size;
     
     // create sprite renderable
     this.mPlayerShip = new SpriteRenderable(spriteTexture);
+    this.mTexture = spriteTexture;
     
     // set position to the red ship
     this.mPlayerShip.setElementPixelPositions(0,111,8,80);
@@ -30,24 +31,17 @@ function PlayerShip(spriteTexture, atX, atY, createCircle, size) {
     // set the position and size
     this.mPlayerShip.getXform().setPosition(atX, atY);
     this.mPlayerShip.getXform().setSize(w, h);
-    
-    
-    
-    if(createCircle===1){
-       this.mPlayerShip.getXform().setSize(h, h); 
-    }
 
     GameObject.call(this, this.mPlayerShip);
     
+    this.mLasers = [];
+    
+    
     var r;
-    if (createCircle)
-        r = new RigidCircle(this.getXform(), 0.35*Math.sqrt(w*w + h*h)); 
-    else
-        r = new RigidRectangle(this.getXform(), w, h);
+    r = new RigidRectangle(this.getXform(), w, h);
     var vx = (Math.random() - 0.5);
     var vy = (Math.random() - 0.5);
     var speed = 20 + Math.random() * 10;
-    //r.setVelocity(vx * speed, vy * speed);
     r.setMass(0);
     r.mDrawBound = false;
     this.setRigidBody(r);
@@ -60,18 +54,28 @@ gEngine.Core.inheritPrototype(PlayerShip, WASDObj);
 
 PlayerShip.prototype.draw = function (aCamera) 
 {
+    for(var i = 0; i < this.mLasers.length; i++)
+    {
+        this.mLasers[i].draw(aCamera);
+    }
     GameObject.prototype.draw.call(this, aCamera);
 };
 
-PlayerShip.prototype.update = function (aCamera) 
+PlayerShip.prototype.update = function (aCamera, enemies) 
 {
     GameObject.prototype.update.call(this);
-    this.keyControl();
     
     // get ship coordinates
     var shipPos = this.mPlayerShip.getXform().getPosition();
     var playerX = shipPos[0];
     var playerY = shipPos[1];
+    
+    for(var i = 0; i < this.mLasers.length; i++)
+    {
+        this.mLasers[i].update();
+    }
+    
+    this.keyControl();
     
     aCamera.setWCCenter(playerX, playerY);
     
@@ -83,5 +87,10 @@ PlayerShip.prototype.update = function (aCamera)
         this.mPlayerShip.getXform().setRotationInDegree(angleDegrees + 90);
     }
     
+    if(gEngine.Input.isButtonClicked(gEngine.Input.mouseButton.Left))
+    {
+        var laser = new Laser(this.mTexture, this.mPlayerShip.getXform());
+        this.mLasers.push(laser);
+    }
     
 };

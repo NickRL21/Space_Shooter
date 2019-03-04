@@ -28,8 +28,8 @@ GrayEnemy.prototype.draw = function (aCamera)
 };
 
 
-GrayEnemy.prototype.update = function(playerPos) {
-    console.log("update");
+GrayEnemy.prototype.update = function(playerPos) 
+{
     Enemy.prototype.update.call(this);
     var pos = this.getXform().getPosition();
     Enemy.prototype.rotateObjPointTo.call(this, playerPos, 0.1);

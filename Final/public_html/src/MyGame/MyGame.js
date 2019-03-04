@@ -46,7 +46,7 @@ MyGame.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
     // create the player ship
-    this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, false, 2);
+    this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, 2);
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
     
     // create the tiled background
@@ -60,9 +60,9 @@ MyGame.prototype.initialize = function () {
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 };
 
-MyGame.prototype.spawnEnemy = function() {
+MyGame.prototype.spawnEnemy = function() 
+{
     var enemy = new GrayEnemy(this.kSpriteSheet);
-    enemy.toggleDrawRenderable();
     enemy.setVisibility(true);
     console.log(JSON.stringify(enemy));
     this.mEnemies.push(enemy);
