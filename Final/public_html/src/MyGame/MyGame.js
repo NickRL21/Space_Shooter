@@ -62,8 +62,8 @@ MyGame.prototype.initialize = function () {
 
 MyGame.prototype.spawnEnemy = function() 
 {
-    var enemy = new GrayEnemy(this.kSpriteSheet, 10, 20);
-    var enemy1 = new GrayEnemy(this.kSpriteSheet, 80, 70);
+    var enemy = new GrayEnemy(this.kSpriteSheet, 10, 10);
+    var enemy1 = new GrayEnemy(this.kSpriteSheet, 80, 80);
     enemy.setVisibility(true);
     console.log(JSON.stringify(enemy));
     this.mEnemies.push(enemy);
