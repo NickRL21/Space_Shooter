@@ -34,7 +34,10 @@ function PlayerShip(spriteTexture, atX, atY, size)
 
     GameObject.call(this, this.mPlayerShip);
     
+    this.mIsAlive = true;
     this.mLasers = [];
+    this.mHealth = 100;
+    this.mShield = new Shield(spriteTexture, this.mPlayerShip.getXform());
     
     
     var r;
@@ -52,6 +55,20 @@ function PlayerShip(spriteTexture, atX, atY, size)
 }
 gEngine.Core.inheritPrototype(PlayerShip, WASDObj);
 
+PlayerShip.prototype.hit = function(damage)
+{
+    this.mHealth -= damage;
+    if(this.mHealth <= 0)
+    {
+        this.mIsAlive = false;
+    }
+};
+
+PlayerShip.prototype.isAlive = function()
+{
+    return this.mIsAlive;
+};
+
 PlayerShip.prototype.draw = function (aCamera) 
 {
     for(var i = 0; i < this.mLasers.length; i++)
@@ -59,6 +76,7 @@ PlayerShip.prototype.draw = function (aCamera)
         this.mLasers[i].draw(aCamera);
     }
     GameObject.prototype.draw.call(this, aCamera);
+    this.mShield.draw(aCamera);
 };
 
 PlayerShip.prototype.update = function (aCamera, enemies) 
@@ -72,8 +90,13 @@ PlayerShip.prototype.update = function (aCamera, enemies)
     
     for(var i = 0; i < this.mLasers.length; i++)
     {
-        this.mLasers[i].update(enemies);
+        if (!this.mLasers[i].update(enemies))
+        {
+            this.mLasers.splice(i, 1);
+        }
     }
+    
+    this.mShield.update(this.mPlayerShip.getXform());
     
     this.keyControl();
     
@@ -93,4 +116,10 @@ PlayerShip.prototype.update = function (aCamera, enemies)
         this.mLasers.push(laser);
     }
     
+    if(gEngine.Input.isKeyClicked(gEngine.Input.keys.E))
+    {
+        this.mShield.activate();
+    }
+    
+    return this.mIsAlive;
 };

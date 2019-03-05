@@ -79,7 +79,11 @@ MyGame.prototype.draw = function ()
     
     // draw the game objects
     this.mBackground.draw(this.mCamera);
-    this.mShip.draw(this.mCamera);   
+    
+    if(this.mShip.isAlive())
+    {
+        this.mShip.draw(this.mCamera);   
+    }
     
     for(var i = 0; i < this.mEnemies.length; ++i) {
         this.mEnemies[i].draw(this.mCamera);
@@ -101,15 +105,29 @@ MyGame.prototype.removeDeadEnemies = function (){
     }
 };
 
+MyGame.prototype.removeDeadPlayer = function (){
+    this.mShip = null;
+};
+
 MyGame.prototype.update = function () 
 {
     // update game objects
-    this.mShip.update(this.mCamera, this.mEnemies);
+    if(this.mShip.isAlive())
+    {
+        if(!this.mShip.update(this.mCamera, this.mEnemies))
+        {
+            this.removeDeadPlayer();
+        }
+    }
+    
     for(var i = 0; i < this.mEnemies.length; ++i) {
-        this.mEnemies[i].update(this.mShip.getXform().getPosition());
+        this.mEnemies[i].update(this.mShip);
     }
     
     this.removeDeadEnemies();
+    
+    
+    
     
     
     this.mCamera.update();
