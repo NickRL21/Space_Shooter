@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function GrayEnemy(spriteSource) 
+function GrayEnemy(spriteSource, atX, atY) 
 {
     // source for the wing image
     this.kSpriteSource = spriteSource;
@@ -12,7 +12,7 @@ function GrayEnemy(spriteSource)
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
     //325 490
     this.mSprite.setElementPixelPositions(519, 599, 620, 700);
-    this.mSprite.getXform().setPosition(30, 30);
+    this.mSprite.getXform().setPosition(atX, atY);
     this.mSprite.getXform().setSize(5, 5);
     
     this.mShootTime = 0;

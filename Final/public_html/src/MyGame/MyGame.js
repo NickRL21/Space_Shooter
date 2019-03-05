@@ -62,10 +62,12 @@ MyGame.prototype.initialize = function () {
 
 MyGame.prototype.spawnEnemy = function() 
 {
-    var enemy = new GrayEnemy(this.kSpriteSheet);
+    var enemy = new GrayEnemy(this.kSpriteSheet, 10, 20);
+    var enemy1 = new GrayEnemy(this.kSpriteSheet, 80, 70);
     enemy.setVisibility(true);
     console.log(JSON.stringify(enemy));
     this.mEnemies.push(enemy);
+    this.mEnemies.push(enemy1);
 }
 
 // This is the draw function, make sure to setup proper drawing environment, and more
