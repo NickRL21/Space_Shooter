@@ -50,10 +50,8 @@ MyGame.prototype.initialize = function () {
     this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, 2);
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
     
-    this.mAsteroids.push(new Asteroid(this.kSpriteSheet, 50, 40));
-    for(var i = 0; i < this.mAsteroids.length; ++i) {
-        //this.mAsteroids[i].toggleDrawRenderable();
-    }
+    this.mAsteroids.push(new Asteroid(this.kSpriteSheet, 20, 30));
+
     
     
     // create the tiled background
@@ -140,7 +138,7 @@ MyGame.prototype.update = function ()
     
     
     for(var i = 0; i < this.mAsteroids.length; ++i) {
-        this.mAsteroids[i].update();
+        this.mAsteroids[i].update(this.mShip.getLasers());
     }
 
     this.mCamera.update();

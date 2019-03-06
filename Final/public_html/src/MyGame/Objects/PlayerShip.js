@@ -79,6 +79,10 @@ PlayerShip.prototype.draw = function (aCamera)
     this.mShield.draw(aCamera);
 };
 
+PlayerShip.prototype.getLasers = function (){
+    return this.mLasers;
+};
+
 PlayerShip.prototype.update = function (aCamera, enemies) 
 {
     GameObject.prototype.update.call(this);

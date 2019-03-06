@@ -16,8 +16,8 @@ function EnemyLaser(spriteSource, playerXform)
 
     this.mSprite.getXform().setRotationInDegree(playerXform.getRotationInDegree());
     this.mSprite.getXform().setPosition(playerXform.getPosition()[0], playerXform.getPosition()[1]);
-  
-    Projectile.call(this, this.mSprite, 1.5, 1.5, 20);
+    // parameters (this, sprite, ridgidbody widthX, ridgidbody witdhY)
+    Projectile.call(this, this.mSprite, 1.5, 1.5, 25);
     Projectile.prototype.setSpeed.call(this, 0.1);
     Projectile.prototype.setDamage.call(this, 10);
     

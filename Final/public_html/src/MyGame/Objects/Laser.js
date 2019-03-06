@@ -19,7 +19,7 @@ function Laser(spriteSource, playerXform)
  // parameters for projectile(this, sprite, ridgidbody widthX, ridgidbody witdhY)
     Projectile.call(this, this.mSprite, .75, 3, 40);
     Projectile.prototype.setDamage.call(this, 10);
-    console.log(this);
+
 };
 gEngine.Core.inheritPrototype(Laser, Projectile);
 

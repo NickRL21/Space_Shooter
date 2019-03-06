@@ -8,12 +8,20 @@ function Asteroid(spriteSource, posX, posY)
     this.kSpriteSource = spriteSource;
     this.valid = true; 
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
-
-    this.mSprite.setElementPixelPositions(327, 424, 643, 548);
-    this.mSprite.getXform().setSize(10, 10);
+    if(Math.random() > .5){
+        //grey asteroid
+        this.mSprite.setElementPixelPositions(327, 424, 381, 476);
+    }else{
+        //brown asteroid
+       this.mSprite.setElementPixelPositions(327, 424, 381+98, 476+98); 
+    }
+    
+    this.mSprite.getXform().setSize(15, 15);
     this.mSprite.getXform().setPosition(posX, posY);
  // parameters for projectile(this, sprite, ridgidbody widthX, ridgidbody witdhY)
+    
     Obstacle.call(this, this.mSprite, 10, 10);
+    this.getRigidBody().setMass(20);
     
 };
 gEngine.Core.inheritPrototype(Asteroid, Obstacle);
@@ -24,8 +32,20 @@ Asteroid.prototype.draw = function (aCamera)
 };
 
 
-Asteroid.prototype.update = function(enemies) 
-{     
+Asteroid.prototype.update = function(playerLasers, enemyLasers) 
+{   
+    for(var i = 0; i < playerLasers.length; ++i){
+       // console.log(playerLasers[i])
+        var test = this.getRigidBody().boundTest(playerLasers[i].getRigidBody());
+        if(test){
+            var V = playerLasers[i].getRigidBody().getVelocity();
+            var d = playerLasers[i].getDamage();
+            var v = this.getRigidBody().getVelocity();
+            var m = this.getRigidBody().getInertia();
+            this.getRigidBody().setVelocity(v[0]+(V[0] * m * d), v[1] + (V[1] * m * d));
+            playerLasers.splice(i, 1);
+        }
+    }
     Obstacle.prototype.update.call(this);
   
 };
