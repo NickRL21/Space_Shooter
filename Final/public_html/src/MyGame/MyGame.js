@@ -17,6 +17,7 @@ function MyGame()
     this.kBackground = "assets/Backgrounds/blue.png";
     this.mShip = null;
     this.mEnemies = [];
+    this.mAsteroids = [];
     
     // The camera to view the scene
     this.mCamera = null;
@@ -49,13 +50,19 @@ MyGame.prototype.initialize = function () {
     this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, 2);
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
     
+    this.mAsteroids.push(new Asteroid(this.kSpriteSheet, 50, 40));
+    for(var i = 0; i < this.mAsteroids.length; ++i) {
+        //this.mAsteroids[i].toggleDrawRenderable();
+    }
+    
+    
     // create the tiled background
     this.mBackground = new TiledGameObject(new TextureRenderable(this.kBackground));
     this.mBackground.getXform().setSize(50,50);
     this.mBackground.getXform().setPosition(50,40);
     
     this.spawnEnemy();
-    
+    console.log(this.mAsteroids[0]);
     // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 };
@@ -90,8 +97,10 @@ MyGame.prototype.draw = function ()
     for(var i = 0; i < this.mEnemies.length; ++i) {
         this.mEnemies[i].draw(this.mCamera);
     }
+    for(var i = 0; i < this.mAsteroids.length; ++i) {
+        this.mAsteroids[i].draw(this.mCamera);
+    }
 
-    
 };
 
 MyGame.prototype.removeDeadEnemies = function (){
@@ -130,7 +139,9 @@ MyGame.prototype.update = function ()
     
     
     
-    
-    
+    for(var i = 0; i < this.mAsteroids.length; ++i) {
+        this.mAsteroids[i].update();
+    }
+
     this.mCamera.update();
 };

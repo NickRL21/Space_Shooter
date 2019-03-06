@@ -17,7 +17,7 @@ function EnemyLaser(spriteSource, playerXform)
     this.mSprite.getXform().setRotationInDegree(playerXform.getRotationInDegree());
     this.mSprite.getXform().setPosition(playerXform.getPosition()[0], playerXform.getPosition()[1]);
   
-    Projectile.call(this, this.mSprite);
+    Projectile.call(this, this.mSprite, 1.5, 1.5, 20);
     Projectile.prototype.setSpeed.call(this, 0.1);
     Projectile.prototype.setDamage.call(this, 10);
     
@@ -33,9 +33,6 @@ EnemyLaser.prototype.draw = function (aCamera)
 
 EnemyLaser.prototype.update = function(enemies) 
 {   
-    var xform = this.mSprite.getXform();
-    xform.incXPosBy(0.5 * Math.cos(xform.getRotationInRad() + (Math.PI/2)));
-    xform.incYPosBy(0.5 * Math.sin(xform.getRotationInRad() + (Math.PI/2)));
     for (var i = 0; i < enemies.length; ++i){
         var box = enemies[i].getBBox();
         var boxResult = box.containsPoint(this.mSprite.getXform().getXPos(), this.mSprite.getXform().getYPos());
