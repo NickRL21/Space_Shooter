@@ -37,8 +37,12 @@ function PlayerShip(spriteTexture, atX, atY, size)
     this.mIsAlive = true;
     this.mLasers = [];
     this.mHealth = 100;
+    this.mMissiles = new Missile(this.mTexture);
     this.mShield = new Shield(spriteTexture, this.mPlayerShip.getXform());
+    this.mSpreadshot = new SpreadShot(this.mTexture);
     
+    this.mAllFire = new GameObjectSet();
+    this.mParticleExpireTime = null;
     
     var r;
     r = new RigidRectangle(this.getXform(), w, h);
@@ -57,10 +61,13 @@ gEngine.Core.inheritPrototype(PlayerShip, WASDObj);
 
 PlayerShip.prototype.hit = function(damage)
 {
-    this.mHealth -= damage;
-    if(this.mHealth <= 0)
+    if (!this.mShield.isActivate())
     {
-        this.mIsAlive = false;
+        this.mHealth -= damage;
+        if(this.mHealth <= 0)
+        {
+            this.mIsAlive = false;
+        }
     }
 };
 
@@ -75,13 +82,30 @@ PlayerShip.prototype.draw = function (aCamera)
     {
         this.mLasers[i].draw(aCamera);
     }
-    GameObject.prototype.draw.call(this, aCamera);
+    
+    this.mAllFire.draw(aCamera);
+    
+    this.mMissiles.draw(aCamera);
+    this.mSpreadshot.draw(aCamera);
     this.mShield.draw(aCamera);
+    
+    GameObject.prototype.draw.call(this, aCamera);
+    
 };
 
 PlayerShip.prototype.update = function (aCamera, enemies) 
 {
     GameObject.prototype.update.call(this);
+    
+    if (Date.now() - this.mParticleExpireTime > 1000)
+    {
+        if (this.mAllFire.size() > 0)
+        {
+            this.mAllFire.removeFromSet(this.mAllFire.getObjectAt(0));
+            this.mParticleExpireTime = Date.now();
+        }
+    }
+    gEngine.ParticleSystem.update(this.mAllFire);
     
     // get ship coordinates
     var shipPos = this.mPlayerShip.getXform().getPosition();
@@ -92,10 +116,17 @@ PlayerShip.prototype.update = function (aCamera, enemies)
     {
         if (!this.mLasers[i].update(enemies))
         {
+            var laserX = this.mLasers[i].getXform().getPosition()[0];
+            var laserY = this.mLasers[i].getXform().getPosition()[1];
+            this.mAllFire.addToSet(new Fire(laserX,laserY,0,0,2,0,2,32,1,0,2.5,0));
+            this.mParticleExpireTime = Date.now();
+            
             this.mLasers.splice(i, 1);
         }
     }
     
+    this.mMissiles.update(enemies);
+    this.mSpreadshot.update(enemies);
     this.mShield.update(this.mPlayerShip.getXform());
     
     this.keyControl();
@@ -119,6 +150,16 @@ PlayerShip.prototype.update = function (aCamera, enemies)
     if(gEngine.Input.isKeyClicked(gEngine.Input.keys.E))
     {
         this.mShield.activate();
+    }
+    
+    if(gEngine.Input.isKeyClicked(gEngine.Input.keys.Q))
+    {
+        this.mMissiles.activate(this.mPlayerShip.getXform());
+    }
+    
+    if(gEngine.Input.isKeyClicked(gEngine.Input.keys.F))
+    {
+        this.mSpreadshot.activate(this.mPlayerShip.getXform());
     }
     
     return this.mIsAlive;
