@@ -215,9 +215,9 @@ gEngine.Physics = (function () {
         var iToj = [0, 0];
         var info = new CollisionInfo();
         for (r= 0; r<mRelaxationCount; r++) {
-            for (i = 0; i<set.size; i++) {
+            for (i = 0; i<set.size(); i++) {
                 var objI = set.getObjectAt(i).getRigidBody();
-                for (j = i+1; j<set.size; j++) {
+                for (j = i+1; j<set.size(); j++) {
                     var objJ = set.getObjectAt(j).getRigidBody();
                     if ( (objI.getInvMass() !== 0) || (objJ.getInvMass() !== 0) ) {
                         if (objI.boundTest(objJ)) {
