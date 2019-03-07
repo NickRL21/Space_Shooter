@@ -97,7 +97,7 @@ PlayerShip.prototype.update = function (aCamera, enemies)
 {
     GameObject.prototype.update.call(this);
     
-    if (Date.now() - this.mParticleExpireTime > 1000)
+    if (Date.now() - this.mParticleExpireTime > 500)
     {
         if (this.mAllFire.size() > 0)
         {
@@ -118,7 +118,7 @@ PlayerShip.prototype.update = function (aCamera, enemies)
         {
             var laserX = this.mLasers[i].getXform().getPosition()[0];
             var laserY = this.mLasers[i].getXform().getPosition()[1];
-            this.mAllFire.addToSet(new Fire(laserX,laserY,0,0,2,0,2,32,1,0,2.5,0));
+            this.mAllFire.addToSet(new Fire(laserX,laserY,0,5,2,0,20,32,1,0,0.2,0));
             this.mParticleExpireTime = Date.now();
             
             this.mLasers.splice(i, 1);
