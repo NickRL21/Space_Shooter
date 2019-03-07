@@ -40,7 +40,7 @@ GrayEnemy.prototype.hit = function(damage){
 
 GrayEnemy.prototype.update = function(playerShip) 
 {
-    if(Date.now() - this.mShootTime > 500)
+    if(Date.now() - this.mShootTime > 600)
     {
         this.mLasers.push(new EnemyLaser(this.kSpriteSource, this.getXform()));
         this.mShootTime = Date.now();

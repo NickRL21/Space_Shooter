@@ -16,7 +16,7 @@ function Missile(spriteSource)
     this.mRechargeTime = Date.now();
     this.valid = false;
   
-    Projectile.call(this, this.mSprite);
+    Projectile.call(this, this.mSprite, 2.5, 2.5, 0);
     Projectile.prototype.setSpeed.call(this, 0.1);
     Projectile.prototype.setDamage.call(this, 50);
     
@@ -30,6 +30,8 @@ Missile.prototype.activate = function(playerXform)
         this.valid = true;
         this.mSprite.getXform().setPosition(playerXform.getPosition()[0], playerXform.getPosition()[1]);
         this.mSprite.getXform().setRotationInDegree(playerXform.getRotationInDegree());
+        Projectile.prototype.resetVelocity.call(this, 1);
+        Projectile.prototype.resetAcceleration.call(this, 150);
         this.mRechargeTime = Date.now();
     }
 };
@@ -49,10 +51,6 @@ Missile.prototype.update = function(enemies)
     {
         this.valid = false;
     }
-
-    var xform = this.mSprite.getXform();
-    xform.incXPosBy(0.6 * Math.cos(xform.getRotationInRad() + (Math.PI/2)));
-    xform.incYPosBy(0.6 * Math.sin(xform.getRotationInRad() + (Math.PI/2)));
     for (var i = 0; i < enemies.length; ++i){
         var box = enemies[i].getBBox();
         var boxResult = box.containsPoint(this.mSprite.getXform().getXPos(), this.mSprite.getXform().getYPos());

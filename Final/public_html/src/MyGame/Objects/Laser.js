@@ -6,21 +6,20 @@
 
 function Laser(spriteSource, playerXform) 
 {
-    // source for the wing image
+    // source for laser image
     this.kSpriteSource = spriteSource;
     this.valid = true; 
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
-    //325 490
+    //position of laser
     this.mSprite.setElementPixelPositions(857, 864, 41, 98);
     this.mSprite.getXform().setSize(0.75, 3);
 
     this.mSprite.getXform().setRotationInDegree(playerXform.getRotationInDegree());
     this.mSprite.getXform().setPosition(playerXform.getPosition()[0], playerXform.getPosition()[1]);
-  
-    Projectile.call(this, this.mSprite);
-    Projectile.prototype.setSpeed.call(this, 0.1);
+ // parameters for projectile(this, sprite, ridgidbody widthX, ridgidbody witdhY)
+    Projectile.call(this, this.mSprite, .75, 3, 40);
     Projectile.prototype.setDamage.call(this, 10);
-    
+
 };
 gEngine.Core.inheritPrototype(Laser, Projectile);
 
@@ -33,9 +32,6 @@ Laser.prototype.draw = function (aCamera)
 
 Laser.prototype.update = function(enemies) 
 {   
-    var xform = this.mSprite.getXform();
-    xform.incXPosBy(Math.cos(xform.getRotationInRad() + (Math.PI/2)));
-    xform.incYPosBy(Math.sin(xform.getRotationInRad() + (Math.PI/2)));
     for (var i = 0; i < enemies.length; ++i){
         var box = enemies[i].getBBox();
         var boxResult = box.containsPoint(this.mSprite.getXform().getXPos(), this.mSprite.getXform().getYPos());
