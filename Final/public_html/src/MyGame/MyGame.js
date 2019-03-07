@@ -21,6 +21,11 @@ function MyGame()
     this.mGlobalLightSet = null;
     // The camera to view the scene
     this.mCamera = null;
+    this.mScore = 0;
+    this.mScoreMsg = null;
+    this.mStartTime = null;
+    this.mTimeMsg = null;
+    this.mToggleMiniMap = false;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -50,13 +55,38 @@ MyGame.prototype.applyLights = function(lightRenderable) {
 }
 
 MyGame.prototype.initialize = function () {
+
+
+    this.mStatsCamera = new Camera(
+             vec2.fromValues(0, 0), // position of the camera
+        50,                     // width of camera
+        [0, 0, 800, 100]         // viewport (orgX, orgY, width, height)
+    );
+    this.mStatsCamera.setBackgroundColor([0, 0, 0, 1]);
     // Step A: set up the cameras
     this.mCamera = new Camera(
         vec2.fromValues(50, 40), // position of the camera
         150,                     // width of camera
-        [0, 0, 800, 600]         // viewport (orgX, orgY, width, height)
+        [0, 100, 800, 600]         // viewport (orgX, orgY, width, height)
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
+    
+    this.mMiniCam = new Camera(
+        vec2.fromValues(0, 0), // position of the camera
+        300,                     // width of camera
+        [600, 500, 200, 200]         // viewport (orgX, orgY, width, height)
+    );
+    this.mMiniCam.setBackgroundColor([0.4, 0.4, 0.4, 1]);
+    
+    this.mScoreMsg = new FontRenderable("");
+    this.mScoreMsg.setColor([1, 1, 1, 1]);
+    this.mScoreMsg.getXform().setPosition(-23, 1);
+    this.mScoreMsg.setTextHeight(2);
+    
+    this.mTimeMsg = new FontRenderable("");
+    this.mTimeMsg.setColor([1, 1, 1, 1]);
+    this.mTimeMsg.getXform().setPosition(-23, -1);
+    this.mTimeMsg.setTextHeight(2);
     
     this._initializeLights();
     
@@ -77,8 +107,10 @@ MyGame.prototype.initialize = function () {
     
     this.spawnEnemy();
     console.log(this.mAsteroids[0]);
+    
     // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    this.mStartTime = Date.now();
 };
 
 MyGame.prototype.spawnEnemy = function() 
@@ -94,38 +126,52 @@ MyGame.prototype.spawnEnemy = function()
     this.mEnemies.push(enemy1);
 }
 
+MyGame.prototype.drawStats= function() {
+   this.mStatsCamera.setupViewProjection();
+   this.mScoreMsg.draw(this.mStatsCamera);   // only draw status in the main camera
+   this.mTimeMsg.draw(this.mStatsCamera);
+};
+
+MyGame.prototype.drawCore= function(camera) {
+    if(this.mShip.isAlive())
+    {
+        this.mShip.draw(camera);   
+    }
+    
+    for(var i = 0; i < this.mEnemies.length; ++i) {
+        this.mEnemies[i].draw(camera);
+    }
+    for(var i = 0; i < this.mAsteroids.length; ++i) {
+        this.mAsteroids[i].draw(camera);
+    }
+};
+
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
 MyGame.prototype.draw = function () 
 {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]); // clear to light gray
-       // this.mGlobalLightSet.getLightAt(0).set2DPosition(this.mEnemies[1].getRenderable().getXform().getPosition());
-    this.mCamera.setupViewProjection();
-    
-    // draw the game objects
-    this.mBackground.draw(this.mCamera);
-//    this.mBg.draw(this.mCamera);
-    if(this.mShip.isAlive())
-    {
-        this.mShip.draw(this.mCamera);   
-    }
-    
-    for(var i = 0; i < this.mEnemies.length; ++i) {
-        this.mEnemies[i].draw(this.mCamera);
-    }
-    for(var i = 0; i < this.mAsteroids.length; ++i) {
-        this.mAsteroids[i].draw(this.mCamera);
-    }
 
+    this.mCamera.setupViewProjection();
+    this.mBackground.draw(this.mCamera);
+    this.drawCore(this.mCamera);
+    if(this.mToggleMinimap) {
+        this.mMiniCam.setupViewProjection();
+        this.drawCore(this.mMiniCam);
+    }
+    this.drawStats();
 };
 
 MyGame.prototype.removeDeadEnemies = function (){
     var to_remove = [];
     for( var j = 0; j < this.mEnemies.length; ++j){
+        // TODO Is it possible to assign the "isAlive" variable as 0 when alive 
+        // and then a number when did which adds to the score
         var alive = this.mEnemies[j].isAlive();
         if(!alive){
             to_remove.push(j);
+            this.mScore += 2000;
         }
     }
     for(var i = 0; i < to_remove.length; ++i){
@@ -136,6 +182,12 @@ MyGame.prototype.removeDeadEnemies = function (){
 MyGame.prototype.removeDeadPlayer = function (){
     this.mShip = null;
 };
+
+MyGame.prototype.updateText = function() {
+    this.mScoreMsg.setText("Score: " + this.mScore);
+    var delta = (Date.now() - this.mStartTime) / 1000;
+    this.mTimeMsg.setText("Time: " + Math.floor(delta))
+}
 
 MyGame.prototype.update = function () 
 {
@@ -153,12 +205,12 @@ MyGame.prototype.update = function ()
     }
     
     this.removeDeadEnemies();
-    
-    
-    
+
     for(var i = 0; i < this.mAsteroids.length; ++i) {
         this.mAsteroids[i].update(this.mShip.getLasers());
     }
 
+    this.updateText();
+    this.controls();
     this.mCamera.update();
 };
