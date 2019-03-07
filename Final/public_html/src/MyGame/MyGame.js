@@ -18,7 +18,7 @@ function MyGame()
     this.mShip = null;
     this.mEnemies = [];
     this.mAsteroids = [];
-    
+    this.mGlobalLightSet = null;
     // The camera to view the scene
     this.mCamera = null;
 }
@@ -37,6 +37,18 @@ MyGame.prototype.unloadScene = function ()
     gEngine.Textures.unloadTexture(this.kBackground);
 };
 
+MyGame.prototype.asteroidFactory = function(atX, atY, light) {
+    var ast1 = new Asteroid(this.kSpriteSheet, atX, atY, light);
+    this.applyLights(ast1.getRenderable());
+    this.mAsteroids.push(ast1);
+}
+
+MyGame.prototype.applyLights = function(lightRenderable) {
+    for (let i = 1; i < 4; i++) {
+        lightRenderable.addLight(this.mGlobalLightSet.getLightAt(i));
+    }
+}
+
 MyGame.prototype.initialize = function () {
     // Step A: set up the cameras
     this.mCamera = new Camera(
@@ -46,13 +58,17 @@ MyGame.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
+    this._initializeLights();
+    
     // create the player ship
-    this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, 2);
+    this.mShip = new PlayerShip(this.kSpriteSheet, 50, 40, 2, this.mGlobalLightSet.getLightAt(0));
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
+    for (let i = 0; i < 4; i++) {
+        this.mShip.getRenderable().addLight(this.mGlobalLightSet.getLightAt(i));
+    }
     
-    this.mAsteroids.push(new Asteroid(this.kSpriteSheet, 20, 30));
-
-    
+    this.asteroidFactory(20, 30, this.mGlobalLightSet.getLightAt(2));
+    this.asteroidFactory(50, 30, this.mGlobalLightSet.getLightAt(3));
     
     // create the tiled background
     this.mBackground = new TiledGameObject(new TextureRenderable(this.kBackground));
@@ -68,9 +84,12 @@ MyGame.prototype.initialize = function () {
 MyGame.prototype.spawnEnemy = function() 
 {
     var enemy = new GrayEnemy(this.kSpriteSheet, 10, 10);
-    var enemy1 = new GrayEnemy(this.kSpriteSheet, 80, 80);
-    enemy.setVisibility(true);
-    console.log(JSON.stringify(enemy));
+    var enemy1 = new LightEnemy(this.kSpriteSheet, 80, 80);
+    enemy1.toggleDrawRenderable();
+    this.applyLights(enemy1.getRenderable());
+
+    enemy1.setVisibility(true);
+
     this.mEnemies.push(enemy);
     this.mEnemies.push(enemy1);
 }
@@ -80,13 +99,13 @@ MyGame.prototype.spawnEnemy = function()
 MyGame.prototype.draw = function () 
 {
     // Step A: clear the canvas
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
-    
+    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]); // clear to light gray
+       // this.mGlobalLightSet.getLightAt(0).set2DPosition(this.mEnemies[1].getRenderable().getXform().getPosition());
     this.mCamera.setupViewProjection();
     
     // draw the game objects
     this.mBackground.draw(this.mCamera);
-    
+//    this.mBg.draw(this.mCamera);
     if(this.mShip.isAlive())
     {
         this.mShip.draw(this.mCamera);   
