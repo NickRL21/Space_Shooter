@@ -113,6 +113,7 @@ SpriteRenderable.prototype.draw = function (aCamera) {
     // set the current texture coordinate
     // 
     // activate the texture
+
     this.mShader.setTextureCoordinate(this.getElementUVCoordinateArray());
     TextureRenderable.prototype.draw.call(this, aCamera);
 };

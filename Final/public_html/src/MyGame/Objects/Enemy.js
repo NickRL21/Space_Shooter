@@ -71,6 +71,7 @@ Enemy.prototype.rotateObjPointTo = function (p, rate) {
 
 Enemy.prototype.draw = function (aCamera) 
 {
+
     GameObject.prototype.draw.call(this, aCamera);
 };
 
