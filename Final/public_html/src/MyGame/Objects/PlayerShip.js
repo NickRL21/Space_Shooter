@@ -39,7 +39,7 @@ function PlayerShip(spriteTexture, atX, atY, size)
     this.mHealth = 100;
     this.mMissiles = new Missile(this.mTexture);
     this.mShield = new Shield(spriteTexture, this.mPlayerShip.getXform());
-    this.mSpreadshot = new SpreadShot(this.mTexture);
+    this.mSpreadshot = new SpreadShot(this.mTexture, 7000, 20, [2,2], 90);
     
     this.mAllFire = new GameObjectSet();
     this.mParticleExpireTime = null;
