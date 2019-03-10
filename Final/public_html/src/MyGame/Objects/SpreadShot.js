@@ -33,7 +33,9 @@ SpreadShot.prototype.activate = function(playerXform)
         
         this.valid = true;
         this.mTimer = Date.now();
+        return true;
     }
+    return false;
 };
 
 SpreadShot.prototype.draw = function (aCamera) 

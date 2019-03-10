@@ -20,7 +20,7 @@ function BaseScene()
     this.mEnemies = [];
     this.mAsteroids = [];
     this.mGlobalLightSet = null;
-    
+
     // The camera to view the scene
     this.mCamera = null;
     this.mScore = 0;
@@ -28,6 +28,8 @@ function BaseScene()
     this.mStartTime = null;
     this.mTimeMsg = null;
     this.mToggleMiniMap = false;
+    this.mEndTime = null;
+    this.mDebug = true;
 }
 gEngine.Core.inheritPrototype(BaseScene, Scene);
 
@@ -42,6 +44,11 @@ BaseScene.prototype.unloadScene = function ()
 {
     gEngine.Textures.unloadTexture(this.kSpriteSheet);
     gEngine.Textures.unloadTexture(this.kBackground);
+    if (!gEngine.ResourceMap.isAssetLoaded("stats")) {
+        gEngine.ResourceMap.asyncLoadRequested("stats");
+    }
+    var stats = {'score': this.mScore, 'start_time': this.mStartTime, 'end_time': Date.now()};
+    gEngine.ResourceMap.asyncLoadCompleted("stats", JSON.stringify(stats));
 };
 
 BaseScene.prototype.asteroidFactory = function (atX, atY, light) {
@@ -53,6 +60,21 @@ BaseScene.prototype.asteroidFactory = function (atX, atY, light) {
 BaseScene.prototype.applyAllLights = function (lightRenderable) {
     for (let i = 1; i < 4; i++) {
         lightRenderable.addLight(this.mGlobalLightSet.getLightAt(i));
+    }
+}
+
+BaseScene.prototype.intializeStats = function () {
+    if (gEngine.ResourceMap.isAssetLoaded("stats")) {
+        var stats = JSON.parse(gEngine.ResourceMap.retrieveAsset("stats"));
+        console.log("?")
+        this.mStartTime = stats.start_time;
+        this.mScore = stats.score;
+        this.mEndTime = stats.end_time;
+        gEngine.ResourceMap.unloadAsset("stats");
+    } else {
+        this.mStartTime = Date.now();
+        this.mScore = 0;
+        this.mEndTime = 0;
     }
 }
 
@@ -74,7 +96,7 @@ BaseScene.prototype.initialize = function () {
     this.mMiniCam = new Camera(
             vec2.fromValues(0, 0),
             300,
-            [600, 500, 200, 200]         
+            [600, 500, 200, 200]
             );
     this.mMiniCam.setBackgroundColor([0.4, 0.4, 0.4, 1]);
 
@@ -90,26 +112,22 @@ BaseScene.prototype.initialize = function () {
 
     this._initializeLights();
 
-//    this.asteroidFactory(20, 30, this.mGlobalLightSet.getLightAt(2));
-//    this.asteroidFactory(50, 30, this.mGlobalLightSet.getLightAt(3));
-
-    // create the tiled background
 
     // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
-    this.mStartTime = Date.now();
+    this.intializeStats();
 };
 
-BaseScene.prototype.initializePlayer = function(atX, atY) {
-      this.mShip = new PlayerShip(this.kSpriteSheet, atX, atY, 2, this.mGlobalLightSet.getLightAt(0));
+BaseScene.prototype.initializePlayer = function (atX, atY) {
+    this.mShip = new PlayerShip(this.kSpriteSheet, atX, atY, 2, this.mGlobalLightSet.getLightAt(0));
     this.mShip.toggleDrawRenderable(); //normally spawns invisible really weird
     for (let i = 0; i < 4; i++) {
         this.mShip.getRenderable().addLight(this.mGlobalLightSet.getLightAt(i));
     }
 };
 
-BaseScene.prototype.intializeBackground = function() {
-     // create the tiled background
+BaseScene.prototype.intializeBackground = function () {
+    // create the tiled background
     this.mBackground = new TiledGameObject(new TextureRenderable(this.kBackground));
     this.mBackground.getXform().setSize(50, 50);
     this.mBackground.getXform().setPosition(50, 40);
@@ -129,14 +147,14 @@ BaseScene.prototype.drawCore = function (camera) {
     }
 };
 
-BaseScene.prototype.drawMainCam = function() {
-      this.mCamera.setupViewProjection();
-      this.mBackground.draw(this.mCamera);
-      this.drawCore(this.mCamera);
+BaseScene.prototype.drawMainCam = function () {
+    this.mCamera.setupViewProjection();
+    this.mBackground.draw(this.mCamera);
+    this.drawCore(this.mCamera);
 };
 
-BaseScene.prototype.drawMiniMap = function() {
-     if (this.mToggleMinimap) {
+BaseScene.prototype.drawMiniMap = function () {
+    if (this.mToggleMinimap) {
         this.mMiniCam.setupViewProjection();
         this.drawCore(this.mMiniCam);
     }
@@ -181,12 +199,16 @@ BaseScene.prototype.removeDeadPlayer = function () {
 
 BaseScene.prototype.updateText = function () {
     this.mScoreMsg.setText("Score: " + this.mScore);
-    var delta = (Date.now() - this.mStartTime) / 1000;
-    this.mTimeMsg.setText("Time: " + Math.floor(delta))
+    var delta = (Date.now() - this.mStartTime);
+    this.mTimeMsg.setText("Time: " + this.getFormattedTime(delta))
 };
 
-BaseScene.prototype.updatePlayer = function() {
-      // update game objects
+BaseScene.prototype.getFormattedTime = function(time) {
+    return Math.floor(time / 1000);
+}
+
+BaseScene.prototype.updatePlayer = function () {
+    // update game objects
     var condition = this.mShip.isAlive();
     if (condition)
     {
@@ -205,13 +227,13 @@ BaseScene.prototype.updateEnemies = function () {
     this.removeDeadEnemies();
 };
 
-BaseScene.prototype.updateAsteroids = function() {
+BaseScene.prototype.updateAsteroids = function () {
     for (var i = 0; i < this.mAsteroids.length; ++i) {
         this.mAsteroids[i].update(this.mShip.getLasers());
     }
 };
 
-BaseScene.prototype.checkForNextLevel = function() {
+BaseScene.prototype.checkForNextLevel = function () {
 
 };
 

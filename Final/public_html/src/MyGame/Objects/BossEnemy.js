@@ -55,6 +55,7 @@ BossEnemy.prototype.update = function(playerShip)
     
     this.mSpreadshot.update([playerShip]);
     this.mSpreadshot2.update([playerShip]);
+    
     this.mHealthBar.update();
     
     for(var i = 0; i < this.mLasers.length; i++)

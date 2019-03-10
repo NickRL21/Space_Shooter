@@ -3,17 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/PlayerShip.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/Projectile.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/Engine/Utils/Transform.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/BossEnemy.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/SpreadShotBullet.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/MyGame.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/SpreadShot.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/EnemyLaser.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/index.html</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/GrayEnemy.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/Enemy.js</file>
+            <file>file:/home/max/projects/scenesII/Final/public_html/src/MyGame/Scenes/LevelOne.js</file>
+            <file>file:/home/max/projects/scenesII/Final/public_html/src/MyGame/Scenes/BaseScene.js</file>
+            <file>file:/home/max/projects/scenesII/Final/public_html/src/MyGame/Objects/Missile.js</file>
         </group>
     </open-files>
 </project-private>

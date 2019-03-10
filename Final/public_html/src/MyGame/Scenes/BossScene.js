@@ -42,6 +42,11 @@ BossScene.prototype.unloadScene = function ()
 {
     gEngine.Textures.unloadTexture(this.kBossSprite);
     BaseScene.prototype.unloadScene.call(this);
+    var nextLevel = new LoseScreen();
+    if(this.mEnemies.length == 0) {
+         nextLevel = new WinScreen();
+    }
+     gEngine.Core.startScene(nextLevel);
 };
 
 
