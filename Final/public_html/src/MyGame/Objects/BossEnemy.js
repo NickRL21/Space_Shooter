@@ -19,9 +19,10 @@ function BossEnemy(spriteSource, atX, atY)
     this.mLasers = [];
     this.mSpreadshot = new SpreadShot("assets/Hero/sheet.png", 1500, 30, [3,3], 50);
     this.mSpreadshot2 = new SpreadShot("assets/Hero/sheet.png", 1500, 16, [3,3], 40);
+    this.mHealthBar = new HealthBar(this.mSprite, 1500);
     
     Enemy.call(this, this.mSprite);
-    Enemy.prototype.setSpeed.call(this, 0.01);
+    Enemy.prototype.setSpeed.call(this, 0.08);
     Enemy.prototype.setHealth.call(this, 1500);
 };
 gEngine.Core.inheritPrototype(BossEnemy, Enemy);
@@ -34,12 +35,13 @@ BossEnemy.prototype.draw = function (aCamera)
     }
     this.mSpreadshot.draw(aCamera);
     this.mSpreadshot2.draw(aCamera);
+    this.mHealthBar.draw(aCamera);
     Enemy.prototype.draw.call(this, aCamera);
 };
 
 BossEnemy.prototype.hit = function(damage){
     Enemy.prototype.hit.call(this, damage);
-    // do somehting cool
+    this.mHealthBar.reduceHealth(damage);
     console.log('hit');
 };
 
@@ -53,6 +55,7 @@ BossEnemy.prototype.update = function(playerShip)
     
     this.mSpreadshot.update([playerShip]);
     this.mSpreadshot2.update([playerShip]);
+    this.mHealthBar.update();
     
     for(var i = 0; i < this.mLasers.length; i++)
     {

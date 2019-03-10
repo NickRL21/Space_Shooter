@@ -37,6 +37,8 @@ function PlayerShip(spriteTexture, atX, atY, size)
     this.mIsAlive = true;
     this.mLasers = [];
     this.mHealth = 100;
+    
+    this.mHealthBar = new HealthBar(this.mPlayerShip, 100);
     this.mMissiles = new Missile(this.mTexture);
     this.mShield = new Shield(spriteTexture, this.mPlayerShip.getXform());
     this.mSpreadshot = new SpreadShot(this.mTexture, 7000, 20, [2,2], 90);
@@ -63,6 +65,8 @@ PlayerShip.prototype.hit = function(damage)
 {
     if (!this.mShield.isActivate())
     {
+        this.mHealthBar.reduceHealth(damage);
+        
         this.mHealth -= damage;
         if(this.mHealth <= 0)
         {
@@ -85,6 +89,7 @@ PlayerShip.prototype.draw = function (aCamera)
     
     this.mAllFire.draw(aCamera);
     
+    this.mHealthBar.draw(aCamera);
     this.mMissiles.draw(aCamera);
     this.mSpreadshot.draw(aCamera);
     this.mShield.draw(aCamera);
@@ -110,6 +115,8 @@ PlayerShip.prototype.update = function (aCamera, enemies)
         }
     }
     gEngine.ParticleSystem.update(this.mAllFire);
+    
+    this.mHealthBar.update();
     
     // get ship coordinates
     var shipPos = this.mPlayerShip.getXform().getPosition();
