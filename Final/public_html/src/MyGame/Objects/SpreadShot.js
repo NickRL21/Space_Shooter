@@ -4,32 +4,35 @@
  * and open the template in the editor.
  */
 
-function SpreadShot(spriteSource) 
+function SpreadShot(spriteSource, rechargeTime, numBullets, bulletSize, bulletSpeed) 
 {
     this.mTexture = spriteSource;
-    this.mRechargeTime = Date.now();
+    this.mTimer = Date.now();
     this.valid = false;
     
     this.mLasers = [];
+    this.mRechargeTime = rechargeTime;
+    this.mNumBullets = numBullets;
+    this.mBulletSize = bulletSize;
+    this.mSpeed = bulletSpeed;
 };
 
 SpreadShot.prototype.activate = function(playerXform)
 {
-    if (Date.now() - this.mRechargeTime > 7000)
+    if (Date.now() - this.mTimer > this.mRechargeTime)
     {
-        for(var i = 0; i < 20; i++)
+        for(var i = 0; i < this.mNumBullets; i++)
         {
-            this.mLasers.push(new SpreadShotBullet(this.mTexture, 0.3141595 * (i + 1)));
-        }
-        
-        for(var i = 0; i < this.mLasers.length; i++)
-        {
+            var rotation = ((2 * Math.PI) / this.mNumBullets) * (i + 1);
+            var b = new SpreadShotBullet(this.mTexture, rotation, this.mBulletSize, this.mSpeed);
             var playerX = playerXform.getPosition()[0];
             var playerY = playerXform.getPosition()[1];
-            this.mLasers[i].getXform().setPosition(playerX, playerY);
+            b.getXform().setPosition(playerX, playerY);
+            this.mLasers.push(b);
         }
+        
         this.valid = true;
-        this.mRechargeTime = Date.now();
+        this.mTimer = Date.now();
     }
 };
 
@@ -47,7 +50,7 @@ SpreadShot.prototype.draw = function (aCamera)
 
 SpreadShot.prototype.update = function(enemies) 
 {   
-    if (Date.now() - this.mRechargeTime > 7000)
+    if (Date.now() - this.mTimer > this.mRechargeTime)
     {
         this.valid = false;
     }
