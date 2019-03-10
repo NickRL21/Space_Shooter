@@ -14,6 +14,7 @@
 function MyGame() 
 {
     this.kSpriteSheet = "assets/Hero/sheet.png";
+    this.kBossSprite = "assets/Hero/boss.png";
     this.kBackground = "assets/Backgrounds/blue.png";
     this.mShip = null;
     this.mEnemies = [];
@@ -33,12 +34,14 @@ gEngine.Core.inheritPrototype(MyGame, Scene);
 MyGame.prototype.loadScene = function () 
 {
     gEngine.Textures.loadTexture(this.kSpriteSheet);
+    gEngine.Textures.loadTexture(this.kBossSprite);
     gEngine.Textures.loadTexture(this.kBackground);
 };
 
 MyGame.prototype.unloadScene = function () 
 {
     gEngine.Textures.unloadTexture(this.kSpriteSheet);
+    gEngine.Textures.unloadTexture(this.kBossSprite);
     gEngine.Textures.unloadTexture(this.kBackground);
 };
 
@@ -115,16 +118,21 @@ MyGame.prototype.initialize = function () {
 
 MyGame.prototype.spawnEnemy = function() 
 {
-    var enemy = new GrayEnemy(this.kSpriteSheet, 10, 10);
-    var enemy1 = new LightEnemy(this.kSpriteSheet, 80, 80);
-    enemy1.toggleDrawRenderable();
-    this.applyLights(enemy1.getRenderable());
 
-    enemy1.setVisibility(true);
+    var enemy = new BossEnemy(this.kBossSprite, 10, 10);
+
+    enemy.setVisibility(true);
+    console.log(JSON.stringify(enemy));
+
+//    var enemy = new GrayEnemy(this.kSpriteSheet, 10, 10);
+  //  var enemy1 = new LightEnemy(this.kSpriteSheet, 80, 80);
+  //  enemy1.toggleDrawRenderable();
+  //  this.applyLights(enemy1.getRenderable());
+
+  //  enemy1.setVisibility(true);
 
     this.mEnemies.push(enemy);
-    this.mEnemies.push(enemy1);
-}
+};
 
 MyGame.prototype.drawStats= function() {
    this.mStatsCamera.setupViewProjection();
