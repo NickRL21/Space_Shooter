@@ -4,45 +4,50 @@
  * and open the template in the editor.
  */
 
-function GrayEnemy(spriteSource, atX, atY) 
+function LightEnemy(spriteSource, atX, atY) 
 {
     // source for the wing image
     this.kSpriteSource = spriteSource;
     
-    this.mSprite = new SpriteRenderable(this.kSpriteSource);
-    //325 490
-    this.mSprite.setElementPixelPositions(519, 599, 620, 700);
+    this.mSprite = new LightRenderable(this.kSpriteSource);
+
+
     this.mSprite.getXform().setPosition(atX, atY);
     this.mSprite.getXform().setSize(5, 5);
-
+    this.mSprite.setColor([1, 1, 1, 0]);
+    this.mSprite.setElementPixelPositions(519, 599, 620, 700);
+ //   this.mSprite.setElementPixelPositions(100, 599, 620, 700);
     this.mShootTime = 0;
     this.mLasers = [];
     
     Enemy.call(this, this.mSprite);
     Enemy.prototype.setSpeed.call(this, 0.1);
 };
-gEngine.Core.inheritPrototype(GrayEnemy, Enemy);
+gEngine.Core.inheritPrototype(LightEnemy, Enemy);
 
-GrayEnemy.prototype.draw = function (aCamera) 
+LightEnemy.prototype.draw = function (aCamera) 
 {
     for(var i = 0; i < this.mLasers.length; i++)
     {
         this.mLasers[i].draw(aCamera);
     }
+    
+    this.mSprite.draw(aCamera);
+
     Enemy.prototype.draw.call(this, aCamera);
 };
 
-GrayEnemy.prototype.hit = function(damage){
+LightEnemy.prototype.hit = function(damage){
     Enemy.prototype.hit.call(this, damage);
     // do somehting cool
     console.log('hit');
 };
 
-GrayEnemy.prototype.update = function(playerShip) 
+LightEnemy.prototype.update = function(playerShip) 
 {
     if(Date.now() - this.mShootTime > 600)
     {
-        this.mLasers.push(new EnemyLaser(this.kSpriteSource, this.getXform(), 25));
+        this.mLasers.push(new EnemyLaser(this.kSpriteSource, this.getXform()));
         this.mShootTime = Date.now();
     }
     

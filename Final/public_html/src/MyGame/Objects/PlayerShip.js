@@ -15,13 +15,13 @@ var kShipWidth = 6*0.5;
 var kShipHeight = 4.8*0.5;
 var kShipRandomSize = 5;
 
-function PlayerShip(spriteTexture, atX, atY, size) 
+function PlayerShip(spriteTexture, atX, atY, size, light) 
 {
     var w = kShipWidth + size;
     var h = kShipHeight + size;
     
     // create sprite renderable
-    this.mPlayerShip = new SpriteRenderable(spriteTexture);
+    this.mPlayerShip = new LightRenderable(spriteTexture);
     this.mTexture = spriteTexture;
     
     // set position to the red ship
@@ -36,6 +36,7 @@ function PlayerShip(spriteTexture, atX, atY, size)
     
     this.mIsAlive = true;
     this.mLasers = [];
+    this.mHealthTotal = 100;
     this.mHealth = 100;
     
     this.mHealthBar = new HealthBar(this.mPlayerShip, 100);
@@ -45,7 +46,7 @@ function PlayerShip(spriteTexture, atX, atY, size)
     
     this.mAllFire = new GameObjectSet();
     this.mParticleExpireTime = null;
-    
+    this.mLight = light;
     var r;
     r = new RigidRectangle(this.getXform(), w, h);
     var vx = (Math.random() - 0.5);
@@ -68,6 +69,7 @@ PlayerShip.prototype.hit = function(damage)
         this.mHealthBar.reduceHealth(damage);
         
         this.mHealth -= damage;
+        this.mLight.setColor([(this.mHealthTotal - this.mHealth)/this.mHealthTotal, 0, 0, 1]);
         if(this.mHealth <= 0)
         {
             this.mIsAlive = false;
@@ -105,7 +107,7 @@ PlayerShip.prototype.getLasers = function (){
 PlayerShip.prototype.update = function (aCamera, enemies) 
 {
     GameObject.prototype.update.call(this);
-    
+    this.mLight.set2DPosition(this.getRenderable().getXform().getPosition());
     if (Date.now() - this.mParticleExpireTime > 1000)
     {
         if (this.mAllFire.size() > 0)
