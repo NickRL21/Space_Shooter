@@ -7,7 +7,8 @@
 function Enemy(spriteRenderable) 
 {
     GameObject.call(this, spriteRenderable);
-    this.mHealth = 50.0;
+    this.mHealth = 20.0;
+    this.mKillWorth = 2000;
 };
 gEngine.Core.inheritPrototype(Enemy, GameObject);
 
@@ -17,7 +18,18 @@ Enemy.prototype.incSpeedBy = function (delta) { this.mSpeed += delta; };
 
 Enemy.prototype.setHealth = function (h) { this.mHealth = h; };
 Enemy.prototype.getHealth = function () { return this.mHealth; };
-Enemy.prototype.isAlive = function () { return this.mHealth > 0.0; };
+Enemy.prototype.isAlive = function () { 
+    if(this.mHealth > 0.0) {
+        return -1;
+    }
+    return this.mKillWorth;
+};
+Enemy.prototype.setKillWorth = function(worth) {
+     this.mKillWorth = worth;
+};
+Enemy.prototype.getKillWorth = function() {
+     return this.mKillWorth;
+};
 Enemy.prototype.hit = function(damage){
     this.mHealth -= damage;
 };

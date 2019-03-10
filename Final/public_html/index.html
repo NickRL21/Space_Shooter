@@ -111,13 +111,14 @@
         <script type="text/javascript" src="src/Engine/UI/UIDDButton.js"></script>
         
         <!-- Client game code -->
+        <script type="text/javascript" src="src/MyGame/Scenes/SpawnManager.js"></script>
+        <script type="text/javascript" src="src/MyGame/Scenes/Spawner.js"></script>
         <script type="text/javascript" src="src/MyGame/MyGame.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/Arena.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/WASDObj.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/PlayerShip.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/Enemy.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/GrayEnemy.js"></script>
-        <script type="text/javascript" src="src/MyGame/Objects/BossEnemy.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/Projectile.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/Laser.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/Missile.js"></script>
@@ -128,15 +129,20 @@
         <script type="text/javascript" src="src/MyGame/Objects/Obstacle.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/Asteroid.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/HealthBar.js"></script>
+        <script type="text/javascript" src="src/MyGame/Objects/BossEnemy.js"></script>
         <script type="text/javascript" src="src/MyGame/Objects/LightEnemy.js"></script>
-        <script type="text/javascript" src="src/MyGame/MyGame_Lights.js"></script>
-        <script type="text/javascript" src="src/MyGame/MyGame_Controls.js"></script>
+        <script type="text/javascript" src="src/MyGame/Scenes/BaseScene.js"></script>
+        <script type="text/javascript" src="src/MyGame/Scenes/BaseScene_Lights.js"></script>
+        <script type="text/javascript" src="src/MyGame/Scenes/BaseScene_Controls.js"></script>
+        <script type="text/javascript" src="src/MyGame/Scenes/BossScene.js"></script>
+
+         <script type="text/javascript" src="src/MyGame/Scenes/LevelOne.js"></script>
 <link rel="stylesheet" type="text/css" href="LoadingIcons.css">
         
     </head>
 
     <body onload="
-        var myGame = new MyGame();
+        var myGame = new LevelOne();
         gEngine.Core.initializeEngineCore('GLCanvas', myGame);
      ">
         <div id="LoadingIconParent" style="width: 800px; height:700px;">

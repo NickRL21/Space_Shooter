@@ -20,7 +20,7 @@ function BossEnemy(spriteSource, atX, atY)
     this.mSpreadshot = new SpreadShot("assets/Hero/sheet.png", 1500, 30, [3,3], 50);
     this.mSpreadshot2 = new SpreadShot("assets/Hero/sheet.png", 1500, 16, [3,3], 40);
     this.mHealthBar = new HealthBar(this.mSprite, 1500);
-    
+    this.setKillWorth(1000000);
     Enemy.call(this, this.mSprite);
     Enemy.prototype.setSpeed.call(this, 0.08);
     Enemy.prototype.setHealth.call(this, 1500);
@@ -72,4 +72,9 @@ BossEnemy.prototype.update = function(playerShip)
     var pos = this.getXform().getPosition();
     Enemy.prototype.rotateObjPointTo.call(this, playerShip.getXform().getPosition(), 0.1);
     vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.getSpeed());
+};
+
+BossEnemy.prototype.copy = function(atX, atY) {
+    var grayEnemy = new BossEnemy(this.kSpriteSource, atX, atY);
+    return grayEnemy;
 };

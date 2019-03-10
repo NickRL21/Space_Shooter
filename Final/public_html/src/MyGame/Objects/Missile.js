@@ -11,7 +11,7 @@ function Missile(spriteSource)
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
     //325 490
     this.mSprite.setElementPixelPositions(576, 600, 700, 724);
-    this.mSprite.getXform().setSize(2.5, 2.5);
+    this.mSprite.getXform().setSize(5, 5);
   
     this.mRechargeTime = Date.now();
     this.valid = false;

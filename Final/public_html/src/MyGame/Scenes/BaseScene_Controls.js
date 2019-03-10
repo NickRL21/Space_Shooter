@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-MyGame.prototype.controls = function() {
+BaseScene.prototype.controls = function() {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.M)) {
         this.mToggleMinimap = !this.mToggleMinimap;
     }
