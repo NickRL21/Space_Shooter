@@ -50,19 +50,28 @@ LevelOne.prototype.initialize = function () {
     this.intializeBackground();
     
     var gray = new GrayEnemy(this.kSpriteSheet, 0, 0);
+    var two = new Enemy2(this.kSpriteSheet, 0, 0);
   //  function Spawner(enemy, currTime, startAfterCurrTime, interval, count, radius) {
     var killTime = 1400;
     var upperQty = 10;
     var upperRad = 40;
-    var startTime = 1000;
-    var startTime2 = startTime + Math.floor(killTime * upperQty * 3 / 4);
+    var startTime = 6000;
+    var startTime2 = startTime + 4000 + Math.floor(killTime * upperQty * 3 / 4);
     var startTime3 = startTime2 + Math.floor(killTime * upperQty / 2 * 3 / 4);
-    var spawner1 = new Spawner(gray, Date.now(), startTime, killTime, upperQty, upperRad);
+    var startTime4 = startTime3 + killTime * 3;
+    
+    //Spawner(enemy, currTime, startAfterCurrTime, interval, count, radius)
+    var spawner1 = new Spawner(gray, Date.now(), startTime, killTime*2, upperQty, upperRad);
     var spawner2 = new Spawner(gray, Date.now(), startTime2, killTime * 2,Math.floor(upperQty/2), upperRad/2);
     var spawner3 = new Spawner(gray, Date.now(), startTime3, killTime * 4, Math.floor(upperQty/4), upperRad/4);
+    var spawner4 = new Spawner(two, Date.now(), startTime4, killTime * 2, upperQty, upperRad);
+    var spawner5 = new Spawner(two, Date.now(), startTime + killTime * 5, killTime * 5 ,5, upperRad);
+    var spawner6 = new Spawner(gray, Date.now(), startTime4, killTime, upperQty, upperRad/2);
     this.mSpawnManager = new SpawnManager(spawner1);
     this.mSpawnManager.addSpawner(spawner2);
     this.mSpawnManager.addSpawner(spawner3);
+    this.mSpawnManager.addSpawner(spawner4);
+    this.mSpawnManager.addSpawner(spawner5);
     
     this.mMsg = new FontRenderable("");
     this.mMsg.setColor([1, 1, 1, 1]);
@@ -106,12 +115,15 @@ LevelOne.prototype.update = function ()
     }
     this.mMsg.getXform().setPosition(shipPos[0], shipPos[1] - 5);
     var time = Date.now();
-    if(time > 20000 + this.mStartTime && time < 22000 + this.mStartTime) {
-         this.mMsg.setText("Press F!");
-    } else if(time > 15000 + this.mStartTime && time < 17000 + this.mStartTime) {
-       this.mMsg.setText("Press E!");
-    } else if(time > 10000 + this.mStartTime && time < 12000 + this.mStartTime) {
-        this.mMsg.setText("Press Q!");
+    if(time > 23000 + this.mStartTime && time < 26000 + this.mStartTime) {
+         this.mMsg.setText("Press Space!");
+    }
+    else if(time > 18000 + this.mStartTime && time < 21000 + this.mStartTime) {
+         this.mMsg.setText("Press Q!");
+    } else if(time > 13000 + this.mStartTime && time < 15000 + this.mStartTime) {
+       this.mMsg.setText("Press F!");
+    } else if(time > 7000 + this.mStartTime && time < 10000 + this.mStartTime) {
+        this.mMsg.setText("Press E!");
     } else if(time < 4000 + this.mStartTime && time > 2000 + this.mStartTime) {
         this.mMsg.setText("Left Click!");
     } else if(time < 2000 + this.mStartTime) {
