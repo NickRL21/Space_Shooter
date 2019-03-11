@@ -45,7 +45,7 @@ BossEnemy.prototype.hit = function(damage){
     console.log('hit');
 };
 
-BossEnemy.prototype.update = function(playerShip) 
+BossEnemy.prototype.update = function(playerShip, asteroids) 
 {
     if(Date.now() - this.mShootTime > 200)
     {

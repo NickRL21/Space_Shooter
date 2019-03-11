@@ -37,7 +37,7 @@ GrayEnemy.prototype.hit = function(damage){
     // do somehting cool
 };
 
-GrayEnemy.prototype.update = function(playerShip) 
+GrayEnemy.prototype.update = function(playerShip, asteroids) 
 {
     if(Date.now() - this.mShootTime > 600)
     {

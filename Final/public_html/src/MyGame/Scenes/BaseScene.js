@@ -55,18 +55,35 @@ BaseScene.prototype.asteroidFactory = function (atX, atY, light) {
     var ast1 = new Asteroid(this.kSpriteSheet, atX, atY, light);
     this.applyAllLights(ast1.getRenderable());
     this.mAsteroids.push(ast1);
-}
+};
+
+BaseScene.prototype.randAsteroidSpawn = function(centerXform){
+    
+    var position = centerXform.getPosition();
+    for (var i = 0; i < 4; ++i){
+    var xOffset = Math.random() * 200 - 100;
+    var yOffset = Math.random() * 200 - 100;
+    while(Math.abs(xOffset- position[0]) < 15 && Math.abs(yOffset- position[1]) < 15){
+        xOffset = Math.random() * 200 - 100;
+        yOffset = Math.random() * 200 - 100;
+        console.log('recalc');
+    }
+    this.asteroidFactory(xOffset + position[0], yOffset + position[1], this.mGlobalLightSet.getLightAt(2 + i));
+    }
+    
+ 
+};
 
 BaseScene.prototype.applyAllLights = function (lightRenderable) {
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 6; i++) {
         lightRenderable.addLight(this.mGlobalLightSet.getLightAt(i));
     }
-}
+};
 
 BaseScene.prototype.intializeStats = function () {
     if (gEngine.ResourceMap.isAssetLoaded("stats")) {
         var stats = JSON.parse(gEngine.ResourceMap.retrieveAsset("stats"));
-        console.log("?")
+        console.log("?");
         this.mStartTime = stats.start_time;
         this.mScore = stats.score;
         this.mEndTime = stats.end_time;
@@ -76,7 +93,7 @@ BaseScene.prototype.intializeStats = function () {
         this.mScore = 0;
         this.mEndTime = 0;
     }
-}
+};
 
 BaseScene.prototype.initialize = function () {
     this.mStatsCamera = new Camera(
@@ -183,7 +200,7 @@ BaseScene.prototype.removeDeadEnemies = function () {
         // TODO Is it possible to assign the "isAlive" variable as 0 when alive 
         // and then a number when did which adds to the score
         var alive = this.mEnemies[j].isAlive();
-        if (alive != -1) {
+        if (alive !== -1) {
             to_remove.push(j);
             this.mScore += alive;
         }
@@ -205,7 +222,7 @@ BaseScene.prototype.updateText = function () {
 
 BaseScene.prototype.getFormattedTime = function(time) {
     return Math.floor(time / 1000);
-}
+};
 
 BaseScene.prototype.updatePlayer = function () {
     // update game objects
@@ -222,7 +239,7 @@ BaseScene.prototype.updatePlayer = function () {
 
 BaseScene.prototype.updateEnemies = function () {
     for (var i = 0; i < this.mEnemies.length; ++i) {
-        this.mEnemies[i].update(this.mShip);
+        this.mEnemies[i].update(this.mShip, this.mAsteroids);
     }
     this.removeDeadEnemies();
 };

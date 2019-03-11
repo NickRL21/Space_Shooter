@@ -13,7 +13,7 @@ SpawnManager.prototype.update = function(enemies, currTime, center) {
         for(var i = 0; i < this.mSpawners.length; ++i) {
             if(this.mSpawners[i].update(enemies, currTime, center)) {
                 this.mSpawners.splice(i, 1);
-                console.log("remove")
+                console.log("remove");
             }
         }
         return false;

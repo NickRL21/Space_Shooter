@@ -41,10 +41,10 @@ LevelOne.prototype.unloadScene = function ()
 
 LevelOne.prototype.initialize = function () {
    BaseScene.prototype.initialize.call(this);
-
+   
         // Create Player Ship
     this.initializePlayer(40, 50);
-
+    this.randAsteroidSpawn(this.mShip.getXform());
     // create the tiled background
     this.intializeBackground();
     
@@ -80,7 +80,7 @@ LevelOne.prototype.spawnEnemy = function ()
 
     this.mEnemies.push(enemy);
     this.mEnemies.push(enemy1);
-}
+};
 
 LevelOne.prototype.draw = function ()
 {

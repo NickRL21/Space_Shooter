@@ -16,6 +16,9 @@ function SpreadShot(spriteSource, rechargeTime, numBullets, bulletSize, bulletSp
     this.mBulletSize = bulletSize;
     this.mSpeed = bulletSpeed;
 };
+SpreadShot.prototype.getLaserRef = function(){
+    return this.mLasers;
+};
 
 SpreadShot.prototype.activate = function(playerXform)
 {

@@ -49,13 +49,13 @@ MyGame.prototype.asteroidFactory = function(atX, atY, light) {
     var ast1 = new Asteroid(this.kSpriteSheet, atX, atY, light);
     this.applyLights(ast1.getRenderable());
     this.mAsteroids.push(ast1);
-}
+};
 
 MyGame.prototype.applyLights = function(lightRenderable) {
     for (let i = 1; i < 4; i++) {
         lightRenderable.addLight(this.mGlobalLightSet.getLightAt(i));
     }
-}
+};
 
 MyGame.prototype.initialize = function () {
 
@@ -194,8 +194,8 @@ MyGame.prototype.removeDeadPlayer = function (){
 MyGame.prototype.updateText = function() {
     this.mScoreMsg.setText("Score: " + this.mScore);
     var delta = (Date.now() - this.mStartTime) / 1000;
-    this.mTimeMsg.setText("Time: " + Math.floor(delta))
-}
+    this.mTimeMsg.setText("Time: " + Math.floor(delta));
+};
 
 MyGame.prototype.update = function () 
 {
