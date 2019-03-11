@@ -107,11 +107,15 @@ LevelOne.prototype.update = function ()
 {
     BaseScene.prototype.update.call(this);
     // enemies, currTime, center
+    
+    if(!this.mShip.isAlive()){
+        this.unloadScene();
+    }
     let shipPos = this.mShip.getRenderable().getXform().getPosition();
     this.mWin = this.mSpawnManager.update(this.mEnemies, Date.now(), shipPos) && this.mEnemies.length == 0;
     if(this.mWin) {
         console.log("win!");
-         gEngine.GameLoop.stop();
+        gEngine.GameLoop.stop();
     }
     this.mMsg.getXform().setPosition(shipPos[0], shipPos[1] - 5);
     var time = Date.now();
@@ -124,9 +128,9 @@ LevelOne.prototype.update = function ()
        this.mMsg.setText("Press F!");
     } else if(time > 7000 + this.mStartTime && time < 10000 + this.mStartTime) {
         this.mMsg.setText("Press E!");
-    } else if(time < 4000 + this.mStartTime && time > 2000 + this.mStartTime) {
+    } else if(time < 6000 + this.mStartTime && time > 3500 + this.mStartTime) {
         this.mMsg.setText("Left Click!");
-    } else if(time < 2000 + this.mStartTime) {
+    } else if(time < 2500 + this.mStartTime) {
         this.mMsg.setText("WASD");
     } else {
         this.mMsg.setText("");

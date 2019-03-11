@@ -17,8 +17,8 @@ function BossEnemy(spriteSource, atX, atY)
     
     this.mShootTime = 0;
     this.mLasers = [];
-    this.mSpreadshot = new SpreadShot("assets/Hero/sheet.png", 1500, 30, [3,3], 50);
-    this.mSpreadshot2 = new SpreadShot("assets/Hero/sheet.png", 1500, 16, [3,3], 40);
+    this.mSpreadshot = new SpreadShot("assets/Hero/sheet.png", 2000, 30, [3,3], 50);
+    this.mSpreadshot2 = new SpreadShot("assets/Hero/sheet.png", 2000, 16, [3,3], 40);
     this.mHealthBar = new HealthBar(this.mSprite, 1500);
     this.setKillWorth(1000000);
     Enemy.call(this, this.mSprite);
@@ -42,17 +42,17 @@ BossEnemy.prototype.draw = function (aCamera)
 BossEnemy.prototype.hit = function(damage){
     Enemy.prototype.hit.call(this, damage);
     this.mHealthBar.reduceHealth(damage);
-    console.log('hit');
 };
 
 BossEnemy.prototype.update = function(playerShip, asteroids) 
 {
-    if(Date.now() - this.mShootTime > 200)
+    if(Date.now() - this.mShootTime > 250)
     {
         this.mLasers.push(new EnemyLaser(this.kSpriteSource, this.getXform(), 50));
         this.mShootTime = Date.now();
     }
     
+
     this.mSpreadshot.update([playerShip], asteroids);
     this.mSpreadshot2.update([playerShip], asteroids);
     

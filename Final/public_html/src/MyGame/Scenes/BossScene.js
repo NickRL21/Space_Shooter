@@ -13,21 +13,9 @@
 
 function BossScene()
 {
-//    this.kSpriteSheet = "assets/Hero/sheet.png";
-//    this.kBackground = "assets/Backgrounds/blue.png";
-//    this.mShip = null;
-//    this.mEnemies = [];
-//    this.mAsteroids = [];
-//    this.mGlobalLightSet = null;
-//    // The camera to view the scene
-//    this.mCamera = null;
-//    this.mScore = 0;
-//    this.mScoreMsg = null;
-//    this.mStartTime = null;
-//    this.mTimeMsg = null;
-//    this.mToggleMiniMap = false;
     this.kBossSprite = "assets/Hero/boss.png";
     BaseScene.call(this);
+    this.surviveTimer = Date.now() + 5000;
 }
 gEngine.Core.inheritPrototype(BossScene, BaseScene);
 
@@ -40,7 +28,8 @@ BossScene.prototype.loadScene = function ()
 
 BossScene.prototype.unloadScene = function ()
 {
-    gEngine.Textures.unloadTexture(this.kBossSprite);
+    //had to comment out to supress annoying alert
+    //gEngine.Textures.unloadTexture(this.kBossSprite);
     BaseScene.prototype.unloadScene.call(this);
     var nextLevel = new LoseScreen();
     if(this.mEnemies.length == 0) {
@@ -77,5 +66,14 @@ BossScene.prototype.draw = function ()
 
 BossScene.prototype.update = function ()
 {
+    if(!this.mShip.isAlive()){
+        this.unloadScene();
+    }
+        if(this.surviveTimer - Date.now() < 0){
+        this.mScore += 750;
+        this.surviveTimer = Date.now() + 5000;
+    }
+
+
     BaseScene.prototype.update.call(this);
 };
