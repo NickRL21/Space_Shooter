@@ -16,7 +16,9 @@ LoseScreen.prototype.loadScene = function ()
 
 LoseScreen.prototype.unloadScene = function ()
 {
-    BaseScene.prototype.loadScene.call(this);
+    BaseScene.prototype.unloadScene.call(this);
+    var nextLevel = new LevelOne(); 
+    gEngine.Core.startScene(nextLevel);
 };
 
 LoseScreen.prototype.initialize = function () {
@@ -41,6 +43,11 @@ LoseScreen.prototype.initialize = function () {
     this.mTimeMsg.setColor([1, 1, 1, 1]);
     this.mTimeMsg.getXform().setPosition(-50, -10);
     this.mTimeMsg.setTextHeight(5);
+    
+    this.mRestartMsg = new FontRenderable("Press R to restart");
+    this.mRestartMsg.setColor([1, 1, 1, 1]);
+    this.mRestartMsg.getXform().setPosition(-50, -30);
+    this.mRestartMsg.setTextHeight(5);
 
     this.intializeBackground();
      this.intializeStats();
@@ -61,11 +68,16 @@ LoseScreen.prototype.draw = function ()
     this.mScoreMsg.draw(this.mCamera);   // only draw status in the main camera
     this.mTimeMsg.draw(this.mCamera);
     this.mLoseMsg.draw(this.mCamera);
+    this.mRestartMsg.draw(this.mCamera);
 };
 
 LoseScreen.prototype.update = function ()
 {
 
+    if(gEngine.Input.isKeyClicked(gEngine.Input.keys.R))
+    {
+        this.unloadScene();
+    }
     this.controls();
     this.mCamera.update();
 

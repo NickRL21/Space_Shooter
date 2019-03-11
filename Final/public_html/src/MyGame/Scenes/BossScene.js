@@ -73,7 +73,11 @@ BossScene.prototype.update = function ()
         this.mScore += 750;
         this.surviveTimer = Date.now() + 5000;
     }
-
+    
+    if(this.mEnemies.length === 0)
+    {
+        this.unloadScene();
+    }
 
     BaseScene.prototype.update.call(this);
 };
