@@ -7,26 +7,31 @@
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
-var kWASDDelta = 0.3;
+
 
 function WASDObj() {
+    this.delta = 0.3;
 }
 gEngine.Core.inheritPrototype(WASDObj, GameObject);
+
+WASDObj.prototype.setDelta = function(delta){
+    this.delta = delta;
+};
 
 WASDObj.prototype.keyControl = function () 
 {
     var xform = this.getXform();
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.W)) {
-        xform.incYPosBy(kWASDDelta);
+        xform.incYPosBy(this.delta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.S)) {
-        xform.incYPosBy(-kWASDDelta);
+        xform.incYPosBy(-this.delta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
-        xform.incXPosBy(-kWASDDelta);
+        xform.incXPosBy(-this.delta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
-        xform.incXPosBy(kWASDDelta);
+        xform.incXPosBy(this.delta);
     }
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Z)) {
         xform.incRotationByDegree(1);
@@ -36,6 +41,5 @@ WASDObj.prototype.keyControl = function ()
     }
     
     this.getRigidBody().userSetsState();
-    
     
 };

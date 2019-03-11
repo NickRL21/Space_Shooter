@@ -7,7 +7,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-MyGame.prototype._createALight = function (type, pos, dir, color, n, f, inner, outer, intensity, dropOff) {
+BaseScene.prototype._createALight = function (type, pos, dir, color, n, f, inner, outer, intensity, dropOff) {
     var light = new Light();
     light.setLightType(type);
     light.setColor(color);
@@ -25,7 +25,7 @@ MyGame.prototype._createALight = function (type, pos, dir, color, n, f, inner, o
     return light;
 };
 
-MyGame.prototype._initializeLights = function () {
+BaseScene.prototype._initializeLights = function () {
     this.mGlobalLightSet = new LightSet();
 
    var l = this._createALight(Light.eLightType.ePointLight,
@@ -62,6 +62,30 @@ MyGame.prototype._initializeLights = function () {
     this.mGlobalLightSet.addToSet(l);
 
 
+    l = this._createALight(Light.eLightType.eSpotLight,
+            [80, 18, 10],            // Right minion position
+            [-0.07,  0, -1],     // direction
+            [0.1, 0.1, 0.1, 1],     // color
+            50, 50,                  // near and far distances
+            1.65, 1.7,               // inner outter angles (in radius)
+            5,                     // intensity
+            1.2                     // drop off
+                  );
+    this.mGlobalLightSet.addToSet(l);
+    
+    
+    l = this._createALight(Light.eLightType.eSpotLight,
+            [80, 18, 10],            // Right minion position
+            [-0.07,  0, -1],     // direction
+            [0.1, 0.1, 0.1, 1],     // color
+            50, 50,                  // near and far distances
+            1.65, 1.7,               // inner outter angles (in radius)
+            5,                     // intensity
+            1.2                     // drop off
+                  );
+    this.mGlobalLightSet.addToSet(l);
+    
+    
     l = this._createALight(Light.eLightType.eSpotLight,
             [80, 18, 10],            // Right minion position
             [-0.07,  0, -1],     // direction

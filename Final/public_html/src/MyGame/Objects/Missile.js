@@ -11,7 +11,7 @@ function Missile(spriteSource)
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
     //325 490
     this.mSprite.setElementPixelPositions(576, 600, 700, 724);
-    this.mSprite.getXform().setSize(2.5, 2.5);
+    this.mSprite.getXform().setSize(5, 5);
   
     this.mRechargeTime = Date.now();
     this.valid = false;
@@ -45,7 +45,7 @@ Missile.prototype.draw = function (aCamera)
 };
 
 
-Missile.prototype.update = function(enemies) 
+Missile.prototype.update = function(enemies, asteroids) 
 {   
     if (Date.now() - this.mRechargeTime > 7000)
     {
@@ -60,6 +60,13 @@ Missile.prototype.update = function(enemies)
             }
             this.valid = false;
             return false;
+        }
+    }
+    if (this.valid){
+        for (var j = 0; j < asteroids.length; ++j){
+            if(asteroids[j].laserHit(this, 2)){
+                 this.valid = false;
+            }
         }
     }
     Projectile.prototype.update.call(this);

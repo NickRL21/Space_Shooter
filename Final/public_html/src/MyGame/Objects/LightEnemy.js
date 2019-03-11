@@ -40,10 +40,9 @@ LightEnemy.prototype.draw = function (aCamera)
 LightEnemy.prototype.hit = function(damage){
     Enemy.prototype.hit.call(this, damage);
     // do somehting cool
-    console.log('hit');
 };
 
-LightEnemy.prototype.update = function(playerShip) 
+LightEnemy.prototype.update = function(playerShip, asteroids) 
 {
     if(Date.now() - this.mShootTime > 600)
     {
@@ -63,4 +62,9 @@ LightEnemy.prototype.update = function(playerShip)
     var pos = this.getXform().getPosition();
     Enemy.prototype.rotateObjPointTo.call(this, playerShip.getXform().getPosition(), 0.1);
     vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.getSpeed());
-}
+};
+
+LightEnemy.prototype.copy = function(atX, atY) {
+    var grayEnemy = new LightEnemy(this.kSpriteSource, atX, atY);
+    return grayEnemy;
+};
