@@ -75,16 +75,18 @@ BaseScene.prototype.randAsteroidSpawn = function(centerXform, num){
 };
 
 BaseScene.prototype.collideShips = function (){
-  var objectSet = new GameObjectSet();
-  for (var i = 0; i < this.mAsteroids.length; ++i){
-      objectSet.addToSet(this.mAsteroids[i]);
-  }
-  for (i = 0; i < this.mEnemies.length; ++i){
+    for (var i = 0; i < this.mEnemies.length; ++i){
+      var objectSet = new GameObjectSet();
       objectSet.addToSet(this.mEnemies[i]);
-  }
+    
+    for (var j = 0; j < this.mAsteroids.length; ++j){
+        objectSet.addToSet(this.mAsteroids[j]);
+    }
   objectSet.addToSet(this.mShip);
   
   gEngine.Physics.processCollision(objectSet, new CollisionInfo());
+  }
+  
 };
 
 BaseScene.prototype.applyAllLights = function (lightRenderable) {

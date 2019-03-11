@@ -95,4 +95,5 @@ Enemy.prototype.draw = function (aCamera)
 
 Enemy.prototype.update = function() {
     GameObject.prototype.update.call(this);
+    this.getRigidBody().setAngularVelocity(0);
 };

@@ -19,7 +19,8 @@ function PlayerShip(spriteTexture, atX, atY, size, light)
 {
     var w = kShipWidth + size;
     var h = kShipHeight + size;
-    
+    this.boostUntil = Date.now();
+    this.boostRecharge = Date.now();
     // create sprite renderable
     this.mPlayerShip = new LightRenderable(spriteTexture);
     this.mTexture = spriteTexture;
@@ -56,7 +57,7 @@ function PlayerShip(spriteTexture, atX, atY, size, light)
     r.mDrawBound = false;
     r.setFriction(0);
     this.setRigidBody(r);
-     
+    WASDObj.call(this);
     //this is spawing as invisible?????
     this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
@@ -105,8 +106,20 @@ PlayerShip.prototype.getLasers = function (){
     return this.mLasers;
 };
 
+PlayerShip.prototype.activateBoost = function (){
+    if(this.boostRecharge - Date.now() < 0){
+        this.boostUntil = Date.now() + 3000;
+        this.boostRecharge = Date.now() + 7000;
+    }
+};
+
 PlayerShip.prototype.update = function (aCamera, enemies, asteroids) 
-{
+{   
+    if(Date.now() - this.boostUntil < 0 ){
+        this.setDelta(.7);
+    }else{
+        this.setDelta(.3);
+    }
     GameObject.prototype.update.call(this);
     this.mLight.set2DPosition(this.getRenderable().getXform().getPosition());
     if (Date.now() - this.mParticleExpireTime > 1000)
@@ -164,6 +177,11 @@ PlayerShip.prototype.update = function (aCamera, enemies, asteroids)
     if(gEngine.Input.isKeyClicked(gEngine.Input.keys.E))
     {
         this.mShield.activate();
+    }
+    
+    if(gEngine.Input.isKeyClicked(gEngine.Input.keys.Space))
+    {
+        this.activateBoost();
     }
     
     if(gEngine.Input.isKeyClicked(gEngine.Input.keys.Q))
