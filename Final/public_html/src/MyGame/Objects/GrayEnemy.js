@@ -19,7 +19,7 @@ function GrayEnemy(spriteSource, atX, atY)
     this.mLasers = [];
     
     Enemy.call(this, this.mSprite);
-    Enemy.prototype.setSpeed.call(this, 0.1);
+    Enemy.prototype.setSpeed.call(this,Math.random() *7 + 7);
 };
 gEngine.Core.inheritPrototype(GrayEnemy, Enemy);
 
@@ -63,8 +63,15 @@ GrayEnemy.prototype.update = function(playerShip, asteroids)
     Enemy.prototype.update.call(this);
     var pos = this.getXform().getPosition();
     Enemy.prototype.rotateObjPointTo.call(this, playerShip.getXform().getPosition(), 0.1);
-    vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.getSpeed());
+    var front = this.getCurrentFrontDir();
+    var dist = vec2.fromValues(this.getXform().getXPos() - playerShip.getXform().getXPos(), this.getXform().getYPos() - playerShip.getXform().getYPos());
+    if(Math.abs(vec2.len(dist)) < 12){
+        this.getRigidBody().setVelocity(0,0);
+    }else{
+        this.getRigidBody().setVelocity(front[0]*this.getSpeed(), front[1]*this.getSpeed());
+    }
 };
+    
 
 GrayEnemy.prototype.copy = function(atX, atY) {
     var grayEnemy = new GrayEnemy(this.kSpriteSource, atX, atY);

@@ -9,6 +9,7 @@ function Obstacle(spriteRenderable, sizeX, sizeY)
     GameObject.call(this, spriteRenderable);
     var xform = spriteRenderable.getXform();
     r = new RigidRectangle(xform, sizeX, sizeY);
+    r.setFriction(0);
     this.setRigidBody(r); 
 };
 gEngine.Core.inheritPrototype(Obstacle, GameObject);

@@ -74,6 +74,19 @@ BaseScene.prototype.randAsteroidSpawn = function(centerXform, num){
  
 };
 
+BaseScene.prototype.collideShips = function (){
+  var objectSet = new GameObjectSet();
+  for (var i = 0; i < this.mAsteroids.length; ++i){
+      objectSet.addToSet(this.mAsteroids[i]);
+  }
+  for (i = 0; i < this.mEnemies.length; ++i){
+      objectSet.addToSet(this.mEnemies[i]);
+  }
+  objectSet.addToSet(this.mShip);
+  
+  gEngine.Physics.processCollision(objectSet, new CollisionInfo());
+};
+
 BaseScene.prototype.applyAllLights = function (lightRenderable) {
     for (let i = 1; i < 6; i++) {
         lightRenderable.addLight(this.mGlobalLightSet.getLightAt(i));
@@ -259,7 +272,9 @@ BaseScene.prototype.update = function ()
     this.updateText();
     this.controls();
     this.mCamera.update();
+    this.collideShips();
     this.updatePlayer();
     this.updateEnemies();
     this.updateAsteroids();
+    
 };

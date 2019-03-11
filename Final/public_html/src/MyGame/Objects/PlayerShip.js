@@ -54,8 +54,9 @@ function PlayerShip(spriteTexture, atX, atY, size, light)
     var speed = 20 + Math.random() * 10;
     r.setMass(0);
     r.mDrawBound = false;
+    r.setFriction(0);
     this.setRigidBody(r);
-    
+     
     //this is spawing as invisible?????
     this.toggleDrawRenderable();
     this.toggleDrawRigidShape();
