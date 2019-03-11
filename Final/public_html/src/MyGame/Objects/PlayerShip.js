@@ -104,7 +104,7 @@ PlayerShip.prototype.getLasers = function (){
     return this.mLasers;
 };
 
-PlayerShip.prototype.update = function (aCamera, enemies) 
+PlayerShip.prototype.update = function (aCamera, enemies, asteroids) 
 {
     GameObject.prototype.update.call(this);
     this.mLight.set2DPosition(this.getRenderable().getXform().getPosition());
@@ -138,8 +138,8 @@ PlayerShip.prototype.update = function (aCamera, enemies)
         }
     }
     
-    this.mMissiles.update(enemies);
-    this.mSpreadshot.update(enemies);
+    this.mMissiles.update(enemies, asteroids);
+    this.mSpreadshot.update(enemies, asteroids);
     this.mShield.update(this.mPlayerShip.getXform());
     
     this.keyControl();

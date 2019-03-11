@@ -45,7 +45,7 @@ Missile.prototype.draw = function (aCamera)
 };
 
 
-Missile.prototype.update = function(enemies) 
+Missile.prototype.update = function(enemies, asteroids) 
 {   
     if (Date.now() - this.mRechargeTime > 7000)
     {
@@ -60,6 +60,13 @@ Missile.prototype.update = function(enemies)
             }
             this.valid = false;
             return false;
+        }
+    }
+    if (this.valid){
+        for (var j = 0; j < asteroids.length; ++j){
+            if(asteroids[j].laserHit(this, 2)){
+                 this.valid = false;
+            }
         }
     }
     Projectile.prototype.update.call(this);

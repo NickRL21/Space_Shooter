@@ -50,6 +50,13 @@ GrayEnemy.prototype.update = function(playerShip, asteroids)
         if (!this.mLasers[i].update([playerShip]))
         {
             this.mLasers.splice(i, 1);
+        }else{
+            for (var j = 0; j < asteroids.length; ++j){
+                if(asteroids[j].laserHit(this.mLasers[i], .25)){
+                     this.mLasers.splice(j, 1);
+                     break;
+                }
+            }
         }
     }
     

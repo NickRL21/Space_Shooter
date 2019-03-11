@@ -57,18 +57,18 @@ BaseScene.prototype.asteroidFactory = function (atX, atY, light) {
     this.mAsteroids.push(ast1);
 };
 
-BaseScene.prototype.randAsteroidSpawn = function(centerXform){
+// num is between 0 and 4
+BaseScene.prototype.randAsteroidSpawn = function(centerXform, num){
     
     var position = centerXform.getPosition();
-    for (var i = 0; i < 4; ++i){
-    var xOffset = Math.random() * 200 - 100;
-    var yOffset = Math.random() * 200 - 100;
-    while(Math.abs(xOffset- position[0]) < 15 && Math.abs(yOffset- position[1]) < 15){
-        xOffset = Math.random() * 200 - 100;
-        yOffset = Math.random() * 200 - 100;
-        console.log('recalc');
-    }
-    this.asteroidFactory(xOffset + position[0], yOffset + position[1], this.mGlobalLightSet.getLightAt(2 + i));
+    console.log(position);
+    for (var i = 0; i < num; ++i){
+        var r = Math.random() * 100 + 25;
+        var angle = Math.random() * Math.PI * 2;
+        var x = position[0] + Math.cos(angle) * r;
+        var y = position[1] + Math.sin(angle) * r;
+        console.log(r);
+        this.asteroidFactory(x, y, this.mGlobalLightSet.getLightAt(2 + i));
     }
     
  
@@ -217,7 +217,7 @@ BaseScene.prototype.removeDeadPlayer = function () {
 BaseScene.prototype.updateText = function () {
     this.mScoreMsg.setText("Score: " + this.mScore);
     var delta = (Date.now() - this.mStartTime);
-    this.mTimeMsg.setText("Time: " + this.getFormattedTime(delta))
+    this.mTimeMsg.setText("Time: " + this.getFormattedTime(delta));
 };
 
 BaseScene.prototype.getFormattedTime = function(time) {
@@ -229,7 +229,7 @@ BaseScene.prototype.updatePlayer = function () {
     var condition = this.mShip.isAlive();
     if (condition)
     {
-        if (!this.mShip.update(this.mCamera, this.mEnemies))
+        if (!this.mShip.update(this.mCamera, this.mEnemies, this.mAsteroids))
         {
             this.removeDeadPlayer();
         }

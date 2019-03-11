@@ -53,18 +53,26 @@ SpreadShot.prototype.draw = function (aCamera)
 };
 
 
-SpreadShot.prototype.update = function(enemies) 
+SpreadShot.prototype.update = function(enemies, asteroids) 
 {   
     if (Date.now() - this.mTimer > this.mRechargeTime)
     {
         this.valid = false;
     }
-    
-    for(var i = 0; i < this.mLasers.length; i++)
-    {
-        if (!this.mLasers[i].update(enemies))
+    if (this.valid){
+        for(var i = 0; i < this.mLasers.length; i++)
         {
-            this.mLasers.splice(i, 1);
+            if (!this.mLasers[i].update(enemies))
+            {
+                this.mLasers.splice(i, 1);
+            }else{
+                for (var j = 0; j < asteroids.length; ++j){
+                    if(asteroids[j].laserHit(this.mLasers[i], .5)){
+                         this.mLasers.splice(i, 1);
+                          break;
+                    }
+                }
+            }
         }
     }
 

@@ -33,14 +33,14 @@ Asteroid.prototype.draw = function (aCamera)
 };
 
 //tests if a laser hit asteroid and calculates new velocity
-Asteroid.prototype.laserHit = function(laser){
+Asteroid.prototype.laserHit = function(laser, multiplier){
     var test = this.getRigidBody().boundTest(laser.getRigidBody());
         if(test){
             var V = laser.getRigidBody().getVelocity();
             var d = laser.getDamage();
             var v = this.getRigidBody().getVelocity();
             var m = this.getRigidBody().getInertia();
-            this.getRigidBody().setVelocity(v[0]+(V[0] * m * d), v[1] + (V[1] * m * d));
+            this.getRigidBody().setVelocity(v[0]+((V[0]-v[0]) * m * d)*multiplier, v[1] + ((V[1]-v[1]) * m * d)*multiplier);
         };
         return test;
 };
@@ -52,7 +52,7 @@ Asteroid.prototype.update = function(playerLasers, enemyLasers)
     }
     for(var i = 0; i < playerLasers.length; ++i){
        // console.log(playerLasers[i])
-        var hit = this.laserHit(playerLasers[i]);
+        var hit = this.laserHit(playerLasers[i], .75);
         if(hit){
             playerLasers.splice(i, 1);
         }
