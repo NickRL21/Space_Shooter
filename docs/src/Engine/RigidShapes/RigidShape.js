@@ -57,6 +57,10 @@ RigidShape.prototype.getFriction = function() { return this.mFriction; };
  * @returns {float} mRestitution
  */
 RigidShape.prototype.getRestitution = function() { return this.mRestitution; };
+
+RigidShape.prototype.getAcceleration = function() { return this.mAcceleration; };
+
+RigidShape.prototype.setAcceleration = function(x, y) { this.mAcceleration = [x,y]; };
 /**
  * Return mAngularVelocity
  * @memberOf RigidShape

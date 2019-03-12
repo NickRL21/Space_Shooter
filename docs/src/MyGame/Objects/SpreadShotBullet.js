@@ -4,38 +4,43 @@
  * and open the template in the editor.
  */
 
-function EnemyLaser(spriteSource, playerXform, speed, damage) 
+function SpreadShotBullet(spriteSource, rotation, size, speed) 
 {
-    if(!damage){
-        damage = 10;
-    }
     // source for the wing image
     this.kSpriteSource = spriteSource;
     this.valid = true; 
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
     //325 490
-    this.mSprite.setElementPixelPositions(841, 854, 340, 377);
-    this.mSprite.getXform().setSize(1.5, 1.5);
+    this.mSprite.setElementPixelPositions(737, 774, 374, 411);
+    this.mSprite.getXform().setSize(size[0], size[1]);
+    this.mSprite.getXform().setRotationInRad(rotation);
+    
+    this.mTimer = Date.now();
 
-    this.mSprite.getXform().setRotationInDegree(playerXform.getRotationInDegree());
-    this.mSprite.getXform().setPosition(playerXform.getPosition()[0], playerXform.getPosition()[1]);
-    // parameters (this, sprite, ridgidbody widthX, ridgidbody witdhY)
-    Projectile.call(this, this.mSprite, 1.5, 1.5, speed);
-    Projectile.prototype.setSpeed.call(this, 0.1);
-    Projectile.prototype.setDamage.call(this, damage);
+    Projectile.call(this, this.mSprite, size[0], size[1], speed);
+    Projectile.prototype.setDamage.call(this, 10);
     
 };
-gEngine.Core.inheritPrototype(EnemyLaser, Projectile);
+gEngine.Core.inheritPrototype(SpreadShotBullet, Projectile);
 
-EnemyLaser.prototype.draw = function (aCamera) 
+SpreadShotBullet.prototype.draw = function (aCamera) 
 {
    Projectile.prototype.draw.call(this, aCamera);
-    //GameObject.prototype.draw.call(this, aCamera);
 };
 
+SpreadShotBullet.prototype.getXform = function()
+{
+    return this.mSprite.getXform();
+};
 
-EnemyLaser.prototype.update = function(enemies) 
+SpreadShotBullet.prototype.update = function(enemies) 
 {   
+    if (Date.now() - this.mTimer > 6000)
+    {
+        return false;
+    }
+    
+    var xform = this.mSprite.getXform();
     for (var i = 0; i < enemies.length; ++i){
         var box = enemies[i].getBBox();
         var boxResult = box.containsPoint(this.mSprite.getXform().getXPos(), this.mSprite.getXform().getYPos());

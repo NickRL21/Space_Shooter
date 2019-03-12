@@ -2,8 +2,7 @@
     Support the loading icon's look 
 */
 p {
-  color: white;
-  font: 300 4em/150% Impact;
+  color: black;
   position: absolute;
   z-index: 1;
   }
