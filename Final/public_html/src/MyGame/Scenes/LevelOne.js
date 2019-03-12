@@ -44,7 +44,7 @@ LevelOne.prototype.initialize = function () {
    
         // Create Player Ship
     this.initializePlayer(40, 50);
-    
+    this.mShip.initCamRef(this.mCamera);
     this.randAsteroidSpawn(this.mShip.getXform(), Math.ceil(Math.random()* 3 + 1));
     // create the tiled background
     this.intializeBackground();

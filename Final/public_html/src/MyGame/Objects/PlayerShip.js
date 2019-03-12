@@ -32,7 +32,7 @@ function PlayerShip(spriteTexture, atX, atY, size, light)
     // set the position and size
     this.mPlayerShip.getXform().setPosition(atX, atY);
     this.mPlayerShip.getXform().setSize(w, h);
-
+    this.mainCamera = null;
     GameObject.call(this, this.mPlayerShip);
     
     this.mIsAlive = true;
@@ -69,7 +69,10 @@ PlayerShip.prototype.hit = function(damage)
     if (!this.mShield.isActivate())
     {
         this.mHealthBar.reduceHealth(damage);
-        
+        console.log(this.mainCamera);
+        if(this.mainCamera){
+            this.mainCamera.shake(4, 4, 10, 5); 
+        }
         this.mHealth -= damage;
         this.mLight.setColor([(this.mHealthTotal - this.mHealth)/this.mHealthTotal, 0, 0, 1]);
         if(this.mHealth <= 0)
@@ -77,6 +80,10 @@ PlayerShip.prototype.hit = function(damage)
             this.mIsAlive = false;
         }
     }
+};
+PlayerShip.prototype.initCamRef = function(camRef)
+{
+    this.mainCamera = camRef;
 };
 
 PlayerShip.prototype.isAlive = function()

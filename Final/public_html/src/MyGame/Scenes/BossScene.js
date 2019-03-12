@@ -45,6 +45,7 @@ BossScene.prototype.initialize = function () {
     // Create Player Ship
     this.initializePlayer(40, 50);
     this.initializeMiniMap(40,50);
+    this.mShip.initCamRef(this.mCamera);
     this.asteroidFactory(20, 40, this.mGlobalLightSet.getLightAt(2));
     this.asteroidFactory(50, -30, this.mGlobalLightSet.getLightAt(3));
     this.asteroidFactory(-40, 30, this.mGlobalLightSet.getLightAt(4));
