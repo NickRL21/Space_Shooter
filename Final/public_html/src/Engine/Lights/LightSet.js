@@ -44,3 +44,8 @@ LightSet.prototype.getLightAt = function (index) {
 LightSet.prototype.addToSet = function (light) {
     this.mSet.push(light);
 };
+
+LightSet.prototype.getLength = function()     {
+    return this.mSet.length;
+};
+                        

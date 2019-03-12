@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 
-function EnemyLaser(spriteSource, playerXform) 
+function EnemyLaser(spriteSource, playerXform, speed, damage) 
 {
+    if(!damage){
+        damage = 10;
+    }
     // source for the wing image
     this.kSpriteSource = spriteSource;
     this.valid = true; 
@@ -17,9 +20,9 @@ function EnemyLaser(spriteSource, playerXform)
     this.mSprite.getXform().setRotationInDegree(playerXform.getRotationInDegree());
     this.mSprite.getXform().setPosition(playerXform.getPosition()[0], playerXform.getPosition()[1]);
     // parameters (this, sprite, ridgidbody widthX, ridgidbody witdhY)
-    Projectile.call(this, this.mSprite, 1.5, 1.5, 25);
+    Projectile.call(this, this.mSprite, 1.5, 1.5, speed);
     Projectile.prototype.setSpeed.call(this, 0.1);
-    Projectile.prototype.setDamage.call(this, 10);
+    Projectile.prototype.setDamage.call(this, damage);
     
 };
 gEngine.Core.inheritPrototype(EnemyLaser, Projectile);

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function SpreadShotBullet(spriteSource, rotation) 
+function SpreadShotBullet(spriteSource, rotation, size, speed) 
 {
     // source for the wing image
     this.kSpriteSource = spriteSource;
@@ -12,10 +12,12 @@ function SpreadShotBullet(spriteSource, rotation)
     this.mSprite = new SpriteRenderable(this.kSpriteSource);
     //325 490
     this.mSprite.setElementPixelPositions(737, 774, 374, 411);
-    this.mSprite.getXform().setSize(2, 2);
+    this.mSprite.getXform().setSize(size[0], size[1]);
     this.mSprite.getXform().setRotationInRad(rotation);
+    
+    this.mTimer = Date.now();
 
-    Projectile.call(this, this.mSprite, 2, 2, 90);
+    Projectile.call(this, this.mSprite, size[0], size[1], speed);
     Projectile.prototype.setDamage.call(this, 10);
     
 };
@@ -33,6 +35,11 @@ SpreadShotBullet.prototype.getXform = function()
 
 SpreadShotBullet.prototype.update = function(enemies) 
 {   
+    if (Date.now() - this.mTimer > 6000)
+    {
+        return false;
+    }
+    
     var xform = this.mSprite.getXform();
     for (var i = 0; i < enemies.length; ++i){
         var box = enemies[i].getBBox();
