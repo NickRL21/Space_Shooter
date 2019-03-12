@@ -75,18 +75,25 @@ BaseScene.prototype.randAsteroidSpawn = function(centerXform, num){
 };
 
 BaseScene.prototype.collideShips = function (){
-    for (var i = 0; i < this.mEnemies.length; ++i){
-      var objectSet = new GameObjectSet();
-      objectSet.addToSet(this.mEnemies[i]);
-    
-    for (var j = 0; j < this.mAsteroids.length; ++j){
-        objectSet.addToSet(this.mAsteroids[j]);
+    if(this.mEnemies.length > 0){
+        for (var i = 0; i < this.mEnemies.length; ++i){
+            var objectSet = new GameObjectSet();
+            objectSet.addToSet(this.mEnemies[i]);
+
+            for (var j = 0; j < this.mAsteroids.length; ++j){
+                objectSet.addToSet(this.mAsteroids[j]);
+            }   
+            objectSet.addToSet(this.mShip);
+            gEngine.Physics.processCollision(objectSet, new CollisionInfo());
+        }
+    }else{
+        var objectSet2 = new GameObjectSet();
+        objectSet2.addToSet(this.mShip);
+        for (var j = 0; j < this.mAsteroids.length; ++j){
+                objectSet2.addToSet(this.mAsteroids[j]);
+            }
+        gEngine.Physics.processCollision(objectSet2, new CollisionInfo());
     }
-  objectSet.addToSet(this.mShip);
-  
-  gEngine.Physics.processCollision(objectSet, new CollisionInfo());
-  }
-  
 };
 
 BaseScene.prototype.applyAllLights = function (lightRenderable) {
@@ -124,14 +131,7 @@ BaseScene.prototype.initialize = function () {
             [0, 100, 800, 600]
             );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-
-    this.mMiniCam = new Camera(
-            vec2.fromValues(0, 0),
-            300,
-            [600, 500, 200, 200]
-            );
-    this.mMiniCam.setBackgroundColor([0.4, 0.4, 0.4, 1]);
-
+    this.initializeMiniMap(40,50);
     this.mScoreMsg = new FontRenderable("");
     this.mScoreMsg.setColor([1, 1, 1, 1]);
     this.mScoreMsg.getXform().setPosition(-23, 1);
@@ -148,6 +148,15 @@ BaseScene.prototype.initialize = function () {
     // sets the background to gray
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
     this.intializeStats();
+};
+
+BaseScene.prototype.initializeMiniMap = function(atX, atY){
+    this.mMiniCam = new Camera(
+            vec2.fromValues(atX, atY),
+            300,
+            [600, 500, 200, 200]
+            );
+    this.mMiniCam.setBackgroundColor([0.4, 0.4, 0.4, 1]);
 };
 
 BaseScene.prototype.initializePlayer = function (atX, atY) {

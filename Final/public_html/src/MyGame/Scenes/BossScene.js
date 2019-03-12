@@ -44,9 +44,11 @@ BossScene.prototype.initialize = function () {
 
     // Create Player Ship
     this.initializePlayer(40, 50);
-
-    this.asteroidFactory(20, 30, this.mGlobalLightSet.getLightAt(2));
-    this.asteroidFactory(50, 30, this.mGlobalLightSet.getLightAt(3));
+    this.initializeMiniMap(40,50);
+    this.asteroidFactory(20, 40, this.mGlobalLightSet.getLightAt(2));
+    this.asteroidFactory(50, -30, this.mGlobalLightSet.getLightAt(3));
+    this.asteroidFactory(-40, 30, this.mGlobalLightSet.getLightAt(4));
+    this.asteroidFactory(-57, -45, this.mGlobalLightSet.getLightAt(5));
 
     // create the tiled background
     this.intializeBackground();
