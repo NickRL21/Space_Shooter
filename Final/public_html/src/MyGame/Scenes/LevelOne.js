@@ -77,6 +77,9 @@ LevelOne.prototype.initialize = function () {
     this.mMsg.setColor([1, 1, 1, 1]);
     this.mMsg.getXform().setPosition(-23, 1);
     this.mMsg.setTextHeight(4);
+    this.mScore = 0;
+    this.mStartTime = Date.now()
+    
 };
 
 LevelOne.prototype.spawnEnemy = function ()

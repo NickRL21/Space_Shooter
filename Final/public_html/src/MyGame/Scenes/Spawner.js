@@ -13,7 +13,7 @@ Spawner.prototype.update = function (enemies, currTime, center) {
     if (this.mSpawned < this.mCount) {
 
         if (this.mStartTime <= currTime) {
-            console.log("start");
+           
             this.mCurrInterval -= currTime - (this.mSpawned * this.mInterval + this.mStartTime);
             if (this.mCurrInterval < 0) {
                 var angle = Math.random() * Math.PI * 2;

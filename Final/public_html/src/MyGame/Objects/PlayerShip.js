@@ -69,7 +69,6 @@ PlayerShip.prototype.hit = function(damage)
     if (!this.mShield.isActivate())
     {
         this.mHealthBar.reduceHealth(damage);
-        console.log(this.mainCamera);
         if(this.mainCamera){
             this.mainCamera.shake(4, 4, 10, 5); 
         }

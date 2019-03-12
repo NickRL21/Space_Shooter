@@ -21,6 +21,7 @@ function Enemy2(spriteSource, atX, atY)
     Enemy.call(this, this.mSprite);
     Enemy.prototype.setHealth.call(this, 40);
     Enemy.prototype.setSpeed.call(this,Math.random() *7 + 15);
+    Enemy.prototype.setKillWorth.call(this,3500);
 };
 gEngine.Core.inheritPrototype(Enemy2, Enemy);
 
