@@ -122,16 +122,19 @@ LevelOne.prototype.update = function ()
     }
     this.mMsg.getXform().setPosition(shipPos[0], shipPos[1] - 5);
     var time = Date.now();
-    if(time > 23000 + this.mStartTime && time < 26000 + this.mStartTime) {
+    if(time > 21000 + this.mStartTime && time < 24000 + this.mStartTime) {
          this.mMsg.setText("Press Space!");
     }
-    else if(time > 18000 + this.mStartTime && time < 21000 + this.mStartTime) {
+    else if(time > 17000 + this.mStartTime && time < 20000 + this.mStartTime) {
          this.mMsg.setText("Press Q!");
-    } else if(time > 13000 + this.mStartTime && time < 15000 + this.mStartTime) {
+    } else if(time > 13000 + this.mStartTime && time < 16000 + this.mStartTime) {
        this.mMsg.setText("Press F!");
-    } else if(time > 7000 + this.mStartTime && time < 10000 + this.mStartTime) {
+    } else if(time > 9000 + this.mStartTime && time < 12000 + this.mStartTime) {
+       this.mMsg.setText("Press M!");
+    }
+     else if(time > 6000 + this.mStartTime && time < 8500 + this.mStartTime) {
         this.mMsg.setText("Press E!");
-    } else if(time < 6000 + this.mStartTime && time > 3500 + this.mStartTime) {
+    } else if(time > 3000 + this.mStartTime && time < 5500 + this.mStartTime) {
         this.mMsg.setText("Left Click!");
     } else if(time < 2500 + this.mStartTime) {
         this.mMsg.setText("WASD");
