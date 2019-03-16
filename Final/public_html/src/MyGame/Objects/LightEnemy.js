@@ -10,13 +10,11 @@ function LightEnemy(spriteSource, atX, atY)
     this.kSpriteSource = spriteSource;
     
     this.mSprite = new LightRenderable(this.kSpriteSource);
-
-
     this.mSprite.getXform().setPosition(atX, atY);
     this.mSprite.getXform().setSize(5, 5);
     this.mSprite.setColor([1, 1, 1, 0]);
     this.mSprite.setElementPixelPositions(519, 599, 620, 700);
- //   this.mSprite.setElementPixelPositions(100, 599, 620, 700);
+
     this.mShootTime = 0;
     this.mLasers = [];
     

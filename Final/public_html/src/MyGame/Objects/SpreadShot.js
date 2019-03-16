@@ -16,6 +16,17 @@ function SpreadShot(spriteSource, rechargeTime, numBullets, bulletSize, bulletSp
     this.mBulletSize = bulletSize;
     this.mSpeed = bulletSpeed;
 };
+
+SpreadShot.prototype.getValid = function() {
+     if (Date.now() - this.mTimer > this.mRechargeTime)
+    {
+        return true;
+    }
+    
+    return false;
+};
+
+
 SpreadShot.prototype.getLaserRef = function(){
     return this.mLasers;
 };

@@ -15,6 +15,7 @@ function Shield(spriteSource, playerXform)
     
     GameObject.call(this, this.mSprite);
 };
+
 gEngine.Core.inheritPrototype(Shield, GameObject);
 
 Shield.prototype.setSpeed = function (s) { this.mSpeed = s; };
@@ -23,6 +24,19 @@ Shield.prototype.setDamage = function (d) { this.mDamage = d; };
 Shield.prototype.getDamage = function () { return this.mDamage; };
 Shield.prototype.incSpeedBy = function (delta) { this.mSpeed += delta; };
 Shield.prototype.isActivate = function() {return this.mIsValid;};
+
+Shield.prototype.getValid = function() {
+   if (Date.now() - this.mRechargeTime > 7000)
+    {
+        if (!this.mIsValid)
+        {
+            return true;
+        }
+    }
+    return false;
+};
+
+
 Shield.prototype.activate = function() 
 {
     if (Date.now() - this.mRechargeTime > 7000)

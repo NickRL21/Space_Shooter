@@ -23,6 +23,14 @@ function Missile(spriteSource)
 };
 gEngine.Core.inheritPrototype(Missile, Projectile);
 
+Missile.prototype.getValid = function() {
+     if (Date.now() - this.mRechargeTime > 7000)
+    {
+        return true;
+    }
+    return false;
+};
+
 Missile.prototype.activate = function(playerXform)
 {
     if (Date.now() - this.mRechargeTime > 7000)
