@@ -151,18 +151,37 @@ BaseScene.prototype.initialize = function () {
     this.mQMsg.setColor([1, 1, 1, 1]);
     this.mQMsg.getXform().setPosition(10, -1);
     this.mQMsg.setTextHeight(2);
+    this.mQimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mQimg.setElementPixelPositions(778, 809, 467, 497);
+    this.mQimg.getXform().setPosition(12, -1.2);
+    this.mQimg.getXform().setSize(1.5,1.5);
+    
     this.mEMsg = new FontRenderable("E");
     this.mEMsg.setColor([1, 1, 1, 1]);
     this.mEMsg.getXform().setPosition(10, 1);
     this.mEMsg.setTextHeight(2);
+    this.mEimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mEimg.setElementPixelPositions(778, 809, 170, 200);
+    this.mEimg.getXform().setPosition(12, 0.8);
+    this.mEimg.getXform().setSize(1.5,1.5);
+    
     this.mFMsg = new FontRenderable("F");
     this.mFMsg.setColor([1, 1, 1, 1]);
     this.mFMsg.getXform().setPosition(15, 1);
     this.mFMsg.setTextHeight(2);
+    this.mFimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mFimg.setElementPixelPositions(777, 809, 639, 671);
+    this.mFimg.getXform().setPosition(17, 0.8);
+    this.mFimg.getXform().setSize(1.5,1.5);
+    
     this.mSpaceMsg = new FontRenderable("Space");
     this.mSpaceMsg.setColor([1, 1, 1, 1]);
     this.mSpaceMsg.getXform().setPosition(15, -1);
     this.mSpaceMsg.setTextHeight(2);
+    this.mSpaceimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mSpaceimg.setElementPixelPositions(810, 829, 157, 187);
+    this.mSpaceimg.getXform().setPosition(21.5, -1.2);
+    this.mSpaceimg.getXform().setSize(1,1.5);
 
 
     this._initializeLights();
@@ -231,9 +250,20 @@ BaseScene.prototype.drawStats = function () {
 
 
     this.mQMsg.draw(this.mStatsCamera);
+    if (this.mDrawQ)
+        this.mQimg.draw(this.mStatsCamera);
+    
     this.mEMsg.draw(this.mStatsCamera);
+    if(this.mDrawE)
+        this.mEimg.draw(this.mStatsCamera);
+    
     this.mFMsg.draw(this.mStatsCamera);
+    if(this.mDrawF)
+        this.mFimg.draw(this.mStatsCamera);
+  
     this.mSpaceMsg.draw(this.mStatsCamera);
+    if(this.mDrawSpace)
+        this.mSpaceimg.draw(this.mStatsCamera);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -323,9 +353,16 @@ BaseScene.prototype.updateAbilitySignifiers = function () {
         // Missiles, Spreadshot, Shield, Booster
         var valid = this.mShip.getValidAbilities();
         this.handleColorSetting(this.mQMsg, valid[0]);
+        this.mDrawQ = valid[0];
+        
         this.handleColorSetting(this.mFMsg, valid[1]);
+        this.mDrawF = valid[1];
+        
         this.handleColorSetting(this.mEMsg, valid[2]);
+        this.mDrawE = valid[2];
+        
         this.handleColorSetting(this.mSpaceMsg, valid[3]);
+        this.mDrawSpace = valid[3];
     }
 };
 
