@@ -41,7 +41,7 @@ Laser.prototype.update = function(enemies, baseSceneRef)
                 var enemyType = enemy.getType();
                 if (enemyType === 'boss'){
                     //TODO GET RID OF LINE BELOW
-                    Projectile.prototype.setDamage.call(this, 50);
+//                    Projectile.prototype.setDamage.call(this, 50);
                     var tPos = [];
                     if(enemy.pixelTouches(this,tPos)){
                         enemy.hit(Projectile.prototype.getDamage.call(this));

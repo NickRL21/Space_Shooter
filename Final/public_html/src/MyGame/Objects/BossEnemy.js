@@ -33,7 +33,7 @@ BossEnemy.prototype.setShake = function (){
     if (this.mShakePosition === null) {
         var frequency = 10;
         var duration = 60; 
-        this.mShakePosition = new ShakePosition(5, 5, frequency, duration);
+        this.mShakePosition = new ShakePosition(3, 3, frequency, duration);
 
     }
 };
