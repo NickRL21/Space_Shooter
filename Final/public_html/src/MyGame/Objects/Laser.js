@@ -41,12 +41,15 @@ Laser.prototype.update = function(enemies, baseSceneRef)
                 var enemyType = enemy.getType();
                 if (enemyType === 'boss'){
                     //TODO GET RID OF LINE BELOW
-                    //Projectile.prototype.setDamage.call(this, 100);
+                    Projectile.prototype.setDamage.call(this, 50);
                     var tPos = [];
                     if(enemy.pixelTouches(this,tPos)){
                         enemy.hit(Projectile.prototype.getDamage.call(this));
                         //add points for every hit
                         baseSceneRef.addToScore(100);
+                        if(enemy.getHealth() < 300){
+                            enemy.setShake();
+                        }
                         this.valid = false;
                         Projectile.prototype.update.call(this);
                         return false;

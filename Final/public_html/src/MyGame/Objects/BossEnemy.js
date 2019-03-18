@@ -14,7 +14,7 @@ function BossEnemy(spriteSource, atX, atY)
     this.mSprite.setElementPixelPositions(0, 173, 86, 256);
     this.mSprite.getXform().setPosition(atX, atY);
     this.mSprite.getXform().setSize(35, 35);
-    
+    this.mShakePosition = null;
     this.mShootTime = 0;
     this.mLasers = [];
     this.mSpreadshot = new SpreadShot("assets/Hero/sheet.png", 2000, 30, [3,3], 50);
@@ -28,6 +28,15 @@ function BossEnemy(spriteSource, atX, atY)
     
 };
 gEngine.Core.inheritPrototype(BossEnemy, Enemy);
+
+BossEnemy.prototype.setShake = function (){
+    if (this.mShakePosition === null) {
+        var frequency = 10;
+        var duration = 60; 
+        this.mShakePosition = new ShakePosition(5, 5, frequency, duration);
+
+    }
+};
 
 BossEnemy.prototype.draw = function (aCamera) 
 {
@@ -84,6 +93,15 @@ BossEnemy.prototype.update = function(playerShip, asteroids)
     var pos = this.getXform().getPosition();
     Enemy.prototype.rotateObjPointTo.call(this, playerShip.getXform().getPosition(), 0.1);
     vec2.scaleAndAdd(pos, pos, this.getCurrentFrontDir(), this.getSpeed());
+    
+    if(this.mShakePosition !== null){
+        var shake = this.mShakePosition.getShakeResults();
+        var xform = this.mSprite.getXform();
+        xform.setPosition(xform.getXPos() + shake[0], xform.getYPos() + shake[1]);
+        if (this.mShakePosition.shakeDone()) {
+            this.mShakePosition = null;
+        }
+    }
 };
 
 BossEnemy.prototype.copy = function(atX, atY) {
