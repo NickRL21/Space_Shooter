@@ -24,6 +24,8 @@ function BossEnemy(spriteSource, atX, atY)
     Enemy.call(this, this.mSprite);
     Enemy.prototype.setSpeed.call(this, 0.08);
     Enemy.prototype.setHealth.call(this, 1500);
+    Enemy.prototype.setType.call(this, 'boss');
+    
 };
 gEngine.Core.inheritPrototype(BossEnemy, Enemy);
 

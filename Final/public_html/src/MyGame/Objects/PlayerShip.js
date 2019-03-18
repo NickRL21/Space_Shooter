@@ -134,7 +134,7 @@ PlayerShip.prototype.getValidAbilities = function () {
         this.isBoostReady()];
 };
 
-PlayerShip.prototype.update = function (aCamera, enemies, asteroids)
+PlayerShip.prototype.update = function (aCamera, enemies, asteroids, baseSceneRef)
 {
     if (Date.now() - this.boostUntil < 0) {
         this.setDelta(.7);
@@ -164,7 +164,7 @@ PlayerShip.prototype.update = function (aCamera, enemies, asteroids)
 
     for (var i = 0; i < this.mLasers.length; i++)
     {
-        if (!this.mLasers[i].update(enemies))
+        if (!this.mLasers[i].update(enemies, baseSceneRef))
         {
             var laserX = this.mLasers[i].getXform().getPosition()[0];
             var laserY = this.mLasers[i].getXform().getPosition()[1];

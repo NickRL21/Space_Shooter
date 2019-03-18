@@ -3,22 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/Engine/Utils/Transform.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/BossEnemy.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/BossScene.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/HealthBar.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/MyGame.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/Engine/Renderables/Renderable.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/LevelOne.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/BaseScene.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/SpawnManager.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/index.html</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/GrayEnemy.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/Enemy.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/WinScreen.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Objects/PlayerShip.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/LoseScreen.js</file>
-            <file>file:/Users/nickt/Desktop/Desktop%20-%20Nick’s%20MacBook%20Pro/school/senior%20year/winter/CSS452/CSS452_Final/Final/public_html/src/MyGame/Scenes/Spawner.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/PlayerShip.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/Enemy.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Scenes/SpawnManager.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/WASDObj.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/Engine/Renderables/SpriteRenderable.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/EnemyLaser.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/Enemy2.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/Engine/GameObjects/GameObject.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/index.html</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/Engine/Utils/ShakePosition.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/Missile.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Scenes/BaseScene.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Objects/Obstacle.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Scenes/LevelOne.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/src/MyGame/Scenes/Spawner.js</file>
+            <file>file:/C:/Users/lorde/repos/CSS452_Final/Final/public_html/assets/Hero/sheet.png</file>
         </group>
     </open-files>
 </project-private>

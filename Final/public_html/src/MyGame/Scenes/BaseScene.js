@@ -45,6 +45,11 @@ BaseScene.prototype.loadScene = function ()
     gEngine.Textures.loadTexture(this.kBackground);
 };
 
+BaseScene.prototype.addToScore = function (score)
+{
+    this.mScore += score;
+};
+
 BaseScene.prototype.unloadScene = function ()
 {
     gEngine.Textures.unloadTexture(this.kSpriteSheet);
@@ -312,7 +317,7 @@ BaseScene.prototype.updatePlayer = function () {
     var condition = this.mShip.isAlive();
     if (condition)
     {
-        if (!this.mShip.update(this.mCamera, this.mEnemies, this.mAsteroids))
+        if (!this.mShip.update(this.mCamera, this.mEnemies, this.mAsteroids, this))
         {
             this.removeDeadPlayer();
         }

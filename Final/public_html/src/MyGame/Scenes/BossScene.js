@@ -16,6 +16,7 @@ function BossScene()
     this.kBossSprite = "assets/Hero/boss.png";
     BaseScene.call(this);
     this.surviveTimer = Date.now() + 5000;
+    this.timeScoreValue = 2500;
 }
 gEngine.Core.inheritPrototype(BossScene, BaseScene);
 
@@ -72,9 +73,11 @@ BossScene.prototype.update = function ()
     if(!this.mShip.isAlive()){
         this.unloadScene();
     }
+    //after 35 seconds player starts to lose score at an increasing rate
         if(this.surviveTimer - Date.now() < 0){
-        this.mScore += 750;
+        this.mScore += this.timeScoreValue;
         this.surviveTimer = Date.now() + 5000;
+        this.timeScoreValue -= 350;
     }
     
     if(this.mEnemies.length === 0)
