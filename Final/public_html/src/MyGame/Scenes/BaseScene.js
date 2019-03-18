@@ -30,6 +30,11 @@ function BaseScene()
     this.mToggleMiniMap = false;
     this.mEndTime = null;
     this.mDebug = true;
+
+    this.mQMsg = null;
+    this.mEMsg = null;
+    this.mFMsg = null;
+    this.mSpaceMsg = null;
 }
 gEngine.Core.inheritPrototype(BaseScene, Scene);
 
@@ -38,6 +43,11 @@ BaseScene.prototype.loadScene = function ()
 {
     gEngine.Textures.loadTexture(this.kSpriteSheet);
     gEngine.Textures.loadTexture(this.kBackground);
+};
+
+BaseScene.prototype.addToScore = function (score)
+{
+    this.mScore += score;
 };
 
 BaseScene.prototype.unloadScene = function ()
@@ -58,11 +68,11 @@ BaseScene.prototype.asteroidFactory = function (atX, atY, light) {
 };
 
 // num is between 0 and 4
-BaseScene.prototype.randAsteroidSpawn = function(centerXform, num){
-    
+BaseScene.prototype.randAsteroidSpawn = function (centerXform, num) {
+
     var position = centerXform.getPosition();
     console.log(position);
-    for (var i = 0; i < num; ++i){
+    for (var i = 0; i < num; ++i) {
         var r = Math.random() * 100 + 25;
         var angle = Math.random() * Math.PI * 2;
         var x = position[0] + Math.cos(angle) * r;
@@ -70,28 +80,28 @@ BaseScene.prototype.randAsteroidSpawn = function(centerXform, num){
         console.log(r);
         this.asteroidFactory(x, y, this.mGlobalLightSet.getLightAt(2 + i));
     }
-    
- 
+
+
 };
 
-BaseScene.prototype.collideShips = function (){
-    if(this.mEnemies.length > 0){
-        for (var i = 0; i < this.mEnemies.length; ++i){
+BaseScene.prototype.collideShips = function () {
+    if (this.mEnemies.length > 0) {
+        for (var i = 0; i < this.mEnemies.length; ++i) {
             var objectSet = new GameObjectSet();
             objectSet.addToSet(this.mEnemies[i]);
 
-            for (var j = 0; j < this.mAsteroids.length; ++j){
+            for (var j = 0; j < this.mAsteroids.length; ++j) {
                 objectSet.addToSet(this.mAsteroids[j]);
-            }   
+            }
             objectSet.addToSet(this.mShip);
             gEngine.Physics.processCollision(objectSet, new CollisionInfo());
         }
-    }else{
+    } else {
         var objectSet2 = new GameObjectSet();
         objectSet2.addToSet(this.mShip);
-        for (var j = 0; j < this.mAsteroids.length; ++j){
-                objectSet2.addToSet(this.mAsteroids[j]);
-            }
+        for (var j = 0; j < this.mAsteroids.length; ++j) {
+            objectSet2.addToSet(this.mAsteroids[j]);
+        }
         gEngine.Physics.processCollision(objectSet2, new CollisionInfo());
     }
 };
@@ -131,7 +141,7 @@ BaseScene.prototype.initialize = function () {
             [0, 100, 800, 600]
             );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
-    this.initializeMiniMap(40,50);
+    this.initializeMiniMap(40, 50);
     this.mScoreMsg = new FontRenderable("");
     this.mScoreMsg.setColor([1, 1, 1, 1]);
     this.mScoreMsg.getXform().setPosition(-23, 1);
@@ -142,6 +152,43 @@ BaseScene.prototype.initialize = function () {
     this.mTimeMsg.getXform().setPosition(-23, -1);
     this.mTimeMsg.setTextHeight(2);
 
+    this.mQMsg = new FontRenderable("Q");
+    this.mQMsg.setColor([1, 1, 1, 1]);
+    this.mQMsg.getXform().setPosition(10, -1);
+    this.mQMsg.setTextHeight(2);
+    this.mQimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mQimg.setElementPixelPositions(778, 809, 467, 497);
+    this.mQimg.getXform().setPosition(12, -1.2);
+    this.mQimg.getXform().setSize(1.5,1.5);
+    
+    this.mEMsg = new FontRenderable("E");
+    this.mEMsg.setColor([1, 1, 1, 1]);
+    this.mEMsg.getXform().setPosition(10, 1);
+    this.mEMsg.setTextHeight(2);
+    this.mEimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mEimg.setElementPixelPositions(778, 809, 170, 200);
+    this.mEimg.getXform().setPosition(12, 0.8);
+    this.mEimg.getXform().setSize(1.5,1.5);
+    
+    this.mFMsg = new FontRenderable("F");
+    this.mFMsg.setColor([1, 1, 1, 1]);
+    this.mFMsg.getXform().setPosition(15, 1);
+    this.mFMsg.setTextHeight(2);
+    this.mFimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mFimg.setElementPixelPositions(777, 809, 639, 671);
+    this.mFimg.getXform().setPosition(17, 0.8);
+    this.mFimg.getXform().setSize(1.5,1.5);
+    
+    this.mSpaceMsg = new FontRenderable("Space");
+    this.mSpaceMsg.setColor([1, 1, 1, 1]);
+    this.mSpaceMsg.getXform().setPosition(15, -1);
+    this.mSpaceMsg.setTextHeight(2);
+    this.mSpaceimg = new SpriteRenderable("assets/Hero/sheet.png");
+    this.mSpaceimg.setElementPixelPositions(810, 829, 157, 187);
+    this.mSpaceimg.getXform().setPosition(21.5, -1.2);
+    this.mSpaceimg.getXform().setSize(1,1.5);
+
+
     this._initializeLights();
 
 
@@ -150,7 +197,7 @@ BaseScene.prototype.initialize = function () {
     this.intializeStats();
 };
 
-BaseScene.prototype.initializeMiniMap = function(atX, atY){
+BaseScene.prototype.initializeMiniMap = function (atX, atY) {
     this.mMiniCam = new Camera(
             vec2.fromValues(atX, atY),
             300,
@@ -165,6 +212,7 @@ BaseScene.prototype.initializePlayer = function (atX, atY) {
     for (let i = 0; i < 4; i++) {
         this.mShip.getRenderable().addLight(this.mGlobalLightSet.getLightAt(i));
     }
+    this.mShip.initCamRef(this.mCamera);
 };
 
 BaseScene.prototype.intializeBackground = function () {
@@ -205,6 +253,23 @@ BaseScene.prototype.drawStats = function () {
     this.mStatsCamera.setupViewProjection();
     this.mScoreMsg.draw(this.mStatsCamera);   // only draw status in the main camera
     this.mTimeMsg.draw(this.mStatsCamera);
+
+
+    this.mQMsg.draw(this.mStatsCamera);
+    if (this.mDrawQ)
+        this.mQimg.draw(this.mStatsCamera);
+    
+    this.mEMsg.draw(this.mStatsCamera);
+    if(this.mDrawE)
+        this.mEimg.draw(this.mStatsCamera);
+    
+    this.mFMsg.draw(this.mStatsCamera);
+    if(this.mDrawF)
+        this.mFimg.draw(this.mStatsCamera);
+  
+    this.mSpaceMsg.draw(this.mStatsCamera);
+    if(this.mDrawSpace)
+        this.mSpaceimg.draw(this.mStatsCamera);
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -244,7 +309,7 @@ BaseScene.prototype.updateText = function () {
     this.mTimeMsg.setText("Time: " + this.getFormattedTime(delta));
 };
 
-BaseScene.prototype.getFormattedTime = function(time) {
+BaseScene.prototype.getFormattedTime = function (time) {
     return Math.floor(time / 1000);
 };
 
@@ -253,7 +318,7 @@ BaseScene.prototype.updatePlayer = function () {
     var condition = this.mShip.isAlive();
     if (condition)
     {
-        if (!this.mShip.update(this.mCamera, this.mEnemies, this.mAsteroids))
+        if (!this.mShip.update(this.mCamera, this.mEnemies, this.mAsteroids, this))
         {
             this.removeDeadPlayer();
         }
@@ -278,6 +343,35 @@ BaseScene.prototype.checkForNextLevel = function () {
 
 };
 
+
+
+BaseScene.prototype.handleColorSetting = function (fr, valid) {
+    if (valid === true) {
+        fr.setColor([0, 1, 0, 1]);
+    } else {
+        fr.setColor([1, 0, 0, 1]);
+    }
+};
+
+BaseScene.prototype.updateAbilitySignifiers = function () {
+
+    if (this.mShip !== null) {
+        // Missiles, Spreadshot, Shield, Booster
+        var valid = this.mShip.getValidAbilities();
+        this.handleColorSetting(this.mQMsg, valid[0]);
+        this.mDrawQ = valid[0];
+        
+        this.handleColorSetting(this.mFMsg, valid[1]);
+        this.mDrawF = valid[1];
+        
+        this.handleColorSetting(this.mEMsg, valid[2]);
+        this.mDrawE = valid[2];
+        
+        this.handleColorSetting(this.mSpaceMsg, valid[3]);
+        this.mDrawSpace = valid[3];
+    }
+};
+
 BaseScene.prototype.update = function ()
 {
     this.updateText();
@@ -287,5 +381,6 @@ BaseScene.prototype.update = function ()
     this.updatePlayer();
     this.updateEnemies();
     this.updateAsteroids();
-    
+    this.updateAbilitySignifiers();
+
 };

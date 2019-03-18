@@ -14,11 +14,14 @@ function Enemy(spriteRenderable)
     r = new RigidRectangle(xform, size[0], size[1]);
     r.setFriction(0);
     this.setRigidBody(r);
+    this.type = 'enemy';
 };
 gEngine.Core.inheritPrototype(Enemy, GameObject);
 
 Enemy.prototype.setSpeed = function (s) { this.mSpeed = s; };
 Enemy.prototype.getSpeed = function () { return this.mSpeed; };
+Enemy.prototype.setType = function (s) { this.type = s; };
+Enemy.prototype.getType = function () { return this.type; };
 Enemy.prototype.incSpeedBy = function (delta) { this.mSpeed += delta; };
 
 Enemy.prototype.setHealth = function (h) { this.mHealth = h; };

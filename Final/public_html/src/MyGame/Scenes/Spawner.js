@@ -1,4 +1,4 @@
-function Spawner(enemy, currTime, startAfterCurrTime, interval, count, radius) {
+function Spawner(enemy, currTime, startAfterCurrTime, interval, count, radius, lights) {
     this.mEnemy = enemy;
     this.mStartTime = currTime + startAfterCurrTime;
     this.mInterval = interval;
@@ -6,10 +6,11 @@ function Spawner(enemy, currTime, startAfterCurrTime, interval, count, radius) {
     this.mRadius = radius;
     this.mSpawned = 0;
     this.mCurrInterval = interval;
+    this.mLights = lights;
 }
 
 
-Spawner.prototype.update = function (enemies, currTime, center) {
+Spawner.prototype.update = function (enemies, currTime, center, globalLights) {
     if (this.mSpawned < this.mCount) {
 
         if (this.mStartTime <= currTime) {
@@ -20,7 +21,14 @@ Spawner.prototype.update = function (enemies, currTime, center) {
                 x = center[0] + Math.cos(angle) * this.mRadius;
                 y = center[1] + Math.sin(angle) * this.mRadius;
           
-                enemies.push(this.mEnemy.copy(x, y));
+                var enemy = this.mEnemy.copy(x, y);
+                if(this.mLights) {
+                    for (let i = 1; i < 6; i++) {
+                        enemy.getRenderable().addLight(globalLights.getLightAt(i));
+                    }
+                }
+                enemies.push(enemy);
+                
                
                 this.mCurrInterval = this.mInterval;
                 this.mSpawned += 1;

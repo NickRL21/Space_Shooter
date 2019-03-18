@@ -9,7 +9,7 @@ function Enemy2(spriteSource, atX, atY)
     // source for the wing image
     this.kSpriteSource = spriteSource;
     
-    this.mSprite = new SpriteRenderable(this.kSpriteSource);
+    this.mSprite = new LightRenderable(this.kSpriteSource);
     //325 490
     this.mSprite.setElementPixelPositions(444, 534, 843, 933);
     this.mSprite.getXform().setPosition(atX, atY);
