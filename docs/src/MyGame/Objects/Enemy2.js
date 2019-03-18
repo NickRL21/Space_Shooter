@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 
-function GrayEnemy(spriteSource, atX, atY) 
+function Enemy2(spriteSource, atX, atY) 
 {
     // source for the wing image
     this.kSpriteSource = spriteSource;
     
-    this.mSprite = new SpriteRenderable(this.kSpriteSource);
+    this.mSprite = new LightRenderable(this.kSpriteSource);
     //325 490
-    this.mSprite.setElementPixelPositions(519, 599, 620, 700);
+    this.mSprite.setElementPixelPositions(444, 534, 843, 933);
     this.mSprite.getXform().setPosition(atX, atY);
     this.mSprite.getXform().setSize(5, 5);
 
@@ -19,11 +19,13 @@ function GrayEnemy(spriteSource, atX, atY)
     this.mLasers = [];
     
     Enemy.call(this, this.mSprite);
-    Enemy.prototype.setSpeed.call(this,Math.random() *7 + 7);
+    Enemy.prototype.setHealth.call(this, 40);
+    Enemy.prototype.setSpeed.call(this,Math.random() *7 + 15);
+    Enemy.prototype.setKillWorth.call(this,3500);
 };
-gEngine.Core.inheritPrototype(GrayEnemy, Enemy);
+gEngine.Core.inheritPrototype(Enemy2, Enemy);
 
-GrayEnemy.prototype.draw = function (aCamera) 
+Enemy2.prototype.draw = function (aCamera) 
 {
     for(var i = 0; i < this.mLasers.length; i++)
     {
@@ -32,16 +34,16 @@ GrayEnemy.prototype.draw = function (aCamera)
     Enemy.prototype.draw.call(this, aCamera);
 };
 
-GrayEnemy.prototype.hit = function(damage){
+Enemy2.prototype.hit = function(damage){
     Enemy.prototype.hit.call(this, damage);
     // do somehting cool
 };
 
-GrayEnemy.prototype.update = function(playerShip, asteroids) 
+Enemy2.prototype.update = function(playerShip, asteroids) 
 {
     if(Date.now() - this.mShootTime > 600)
     {
-        this.mLasers.push(new EnemyLaser(this.kSpriteSource, this.getXform(), 25));
+        this.mLasers.push(new EnemyLaser(this.kSpriteSource, this.getXform(), 40, 5));
         this.mShootTime = Date.now();
     }
     
@@ -73,7 +75,7 @@ GrayEnemy.prototype.update = function(playerShip, asteroids)
 };
     
 
-GrayEnemy.prototype.copy = function(atX, atY) {
-    var grayEnemy = new GrayEnemy(this.kSpriteSource, atX, atY);
-    return grayEnemy;
+Enemy2.prototype.copy = function(atX, atY) {
+    var Enemy = new Enemy2(this.kSpriteSource, atX, atY);
+    return Enemy;
 };

@@ -7,17 +7,37 @@
 function Enemy(spriteRenderable) 
 {
     GameObject.call(this, spriteRenderable);
-    this.mHealth = 50.0;
+    this.mHealth = 20.0;
+    this.mKillWorth = 2000;
+    var xform = spriteRenderable.getXform();
+    var size = xform.getSize();
+    r = new RigidRectangle(xform, size[0], size[1]);
+    r.setFriction(0);
+    this.setRigidBody(r);
+    this.type = 'enemy';
 };
 gEngine.Core.inheritPrototype(Enemy, GameObject);
 
 Enemy.prototype.setSpeed = function (s) { this.mSpeed = s; };
 Enemy.prototype.getSpeed = function () { return this.mSpeed; };
+Enemy.prototype.setType = function (s) { this.type = s; };
+Enemy.prototype.getType = function () { return this.type; };
 Enemy.prototype.incSpeedBy = function (delta) { this.mSpeed += delta; };
 
 Enemy.prototype.setHealth = function (h) { this.mHealth = h; };
 Enemy.prototype.getHealth = function () { return this.mHealth; };
-Enemy.prototype.isAlive = function () { return this.mHealth > 0.0; };
+Enemy.prototype.isAlive = function () { 
+    if(this.mHealth > 0.0) {
+        return -1;
+    }
+    return this.mKillWorth;
+};
+Enemy.prototype.setKillWorth = function(worth) {
+     this.mKillWorth = worth;
+};
+Enemy.prototype.getKillWorth = function() {
+     return this.mKillWorth;
+};
 Enemy.prototype.hit = function(damage){
     this.mHealth -= damage;
 };
@@ -71,10 +91,12 @@ Enemy.prototype.rotateObjPointTo = function (p, rate) {
 
 Enemy.prototype.draw = function (aCamera) 
 {
+
     GameObject.prototype.draw.call(this, aCamera);
 };
 
 
 Enemy.prototype.update = function() {
     GameObject.prototype.update.call(this);
-}
+    this.getRigidBody().setAngularVelocity(0);
+};
