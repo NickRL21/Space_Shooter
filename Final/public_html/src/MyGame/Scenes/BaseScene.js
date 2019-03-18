@@ -212,6 +212,7 @@ BaseScene.prototype.initializePlayer = function (atX, atY) {
     for (let i = 0; i < 4; i++) {
         this.mShip.getRenderable().addLight(this.mGlobalLightSet.getLightAt(i));
     }
+    this.mShip.initCamRef(this.mCamera);
 };
 
 BaseScene.prototype.intializeBackground = function () {

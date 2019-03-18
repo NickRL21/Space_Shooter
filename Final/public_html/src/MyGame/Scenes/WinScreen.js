@@ -77,7 +77,7 @@ WinScreen.prototype.update = function ()
 {
     if(gEngine.Input.isKeyClicked(gEngine.Input.keys.R))
     {
-        this.unloadScene();
+        gEngine.GameLoop.stop();
     }
     
     this.controls();

@@ -71,7 +71,7 @@ BossScene.prototype.draw = function ()
 BossScene.prototype.update = function ()
 {
     if(!this.mShip.isAlive()){
-        this.unloadScene();
+       gEngine.GameLoop.stop();
     }
     //after 35 seconds player starts to lose score at an increasing rate
         if(this.surviveTimer - Date.now() < 0){
@@ -82,7 +82,12 @@ BossScene.prototype.update = function ()
     
     if(this.mEnemies.length === 0)
     {
-        this.unloadScene();
+        gEngine.GameLoop.stop();
+    }
+    
+    if(gEngine.Input.isKeyClicked(gEngine.Input.keys.K))
+    {
+         this.mEnemies[0].hit(1500);
     }
 
     BaseScene.prototype.update.call(this);
