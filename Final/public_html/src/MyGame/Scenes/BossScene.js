@@ -87,7 +87,7 @@ BossScene.prototype.update = function ()
     
     if(gEngine.Input.isKeyClicked(gEngine.Input.keys.K))
     {
-         this.mEnemies[0].hit(1500);
+         this.mEnemies[0].hit(50);
     }
 
     BaseScene.prototype.update.call(this);
