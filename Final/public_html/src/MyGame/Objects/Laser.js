@@ -30,17 +30,40 @@ Laser.prototype.draw = function (aCamera)
 };
 
 
-Laser.prototype.update = function(enemies) 
+Laser.prototype.update = function(enemies, baseSceneRef) 
 {   
     for (var i = 0; i < enemies.length; ++i){
         var box = enemies[i].getBBox();
         var boxResult = box.containsPoint(this.mSprite.getXform().getXPos(), this.mSprite.getXform().getYPos());
         if (boxResult){
             if(this.valid){
-                enemies[i].hit(Projectile.prototype.getDamage.call(this));
+                var enemy = enemies[i];
+                var enemyType = enemy.getType();
+                if (enemyType === 'boss'){
+                    //TODO GET RID OF LINE BELOW
+//                    Projectile.prototype.setDamage.call(this, 50);
+                    var tPos = [];
+                    if(enemy.pixelTouches(this,tPos)){
+                        enemy.hit(Projectile.prototype.getDamage.call(this));
+                        //add points for every hit
+                        baseSceneRef.addToScore(100);
+                        if(enemy.getHealth() < 300){
+                            enemy.setShake();
+                        }
+                        this.valid = false;
+                        Projectile.prototype.update.call(this);
+                        return false;
+                    }
+                }else{
+                    enemies[i].hit(Projectile.prototype.getDamage.call(this));
+                    //add points for every hit
+                    baseSceneRef.addToScore(10);
+                    this.valid = false;
+                    Projectile.prototype.update.call(this);
+                    return false;
+                }
+                
             }
-            this.valid = false;
-            return false;
         }
     }
     Projectile.prototype.update.call(this);

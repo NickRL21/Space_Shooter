@@ -19,6 +19,6 @@ BaseScene.prototype.controls = function () {
         }
     }
 
-}
+};
 
 
