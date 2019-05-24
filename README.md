@@ -1,4 +1,4 @@
-# CSS452_Final 2D Space Game
+# CSS 452 Final 2D Space Game
 Play the game here: https://nickrl21.github.io/CSS452_Final/  
 Authors Max Wright, Nick Lewis, and Nick Tibbott.  
 Art by: www.Kenney.nl  
